@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/explore"
+            android:icon="@drawable/order"
+            android:title="My Ads" />
+        <item
+            android:id="@+id/contact"
+            android:icon="@drawable/contact_phone_24"
+            android:title="Contact us" />
+        <item
+            android:id="@+id/orders"
+            android:icon="@drawable/ordera"
+            android:title="Orders" />
+        <item
+            android:id="@+id/myBookings"
+            android:icon="@drawable/booking"
+            android:title="My bookings" />
+        <item
+            android:id="@+id/internshipform"
+            android:icon="@drawable/clipboard"
+            android:title="Internship form" />
+        <item
+            android:id="@+id/blogs"
+            android:icon="@drawable/blog"
+            android:title="Our blogs" />
+        <item
+            android:id="@+id/about_usMessage"
+            android:icon="@drawable/aboutus"
+            android:title="About us" />
+        <item
+            android:id="@+id/feedback"
+            android:icon="@drawable/feedback"
+            android:title="Feedback" />
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/setting"
+            android:title="Settings" />
+        <item
+            android:id="@+id/privacy"
+            android:icon="@drawable/privacypolicy"
+            android:title="Privacy Policy" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/logout"
+            android:title="Log out" />
+    </group>
+</menu>

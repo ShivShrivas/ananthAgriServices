@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homePage"
+        android:icon="@drawable/home_24"
+        android:title="Home" />
+    <item
+        android:id="@+id/orders"
+        android:icon="@drawable/orderr"
+        android:title="My ads" />
+    <item
+        android:id="@+id/anchor"
+        android:title="" />
+    <item
+        android:id="@+id/edit_profilebo"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Profile" />
+    <item
+        android:id="@+id/popUp"
+        android:icon="@drawable/vert_24"
+        android:title="Menu" />
+
+</menu>
