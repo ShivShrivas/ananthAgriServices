@@ -21,7 +21,7 @@ public class Blogs extends AppCompatActivity {
 
     WebView webView;
     private String webUrl="https://aasblogs.in/";
-    ImageView back;
+    ImageView back,ubiubw;
     TextView backt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
