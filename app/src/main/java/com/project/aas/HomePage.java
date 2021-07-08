@@ -30,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.FirebaseDatabase;
 import com.project.aas.databinding.ActivityHomePageBinding;
 import com.project.aas.ui.AddAds;
 import com.project.aas.ui.EditProfile;
@@ -78,6 +79,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         binding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         setSupportActionBar(binding.appBarHomePage.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
@@ -206,4 +208,5 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
     }
+
 }
