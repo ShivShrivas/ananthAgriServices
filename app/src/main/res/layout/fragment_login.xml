@@ -6,19 +6,19 @@
     tools:context=".LoginFragment">
 
     <EditText
-        android:id="@+id/emailid"
+        android:id="@+id/phoneId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email id / Mobile number"
+        android:hint="Email id"
         android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="35dp"/>
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/password_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-        android:layout_below="@+id/emailid"
+        android:layout_below="@+id/phoneId"
         android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="15dp"/>
@@ -27,8 +27,8 @@
         android:id="@+id/forgot_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:layout_marginTop="28dp"
+        android:layout_below="@+id/password_login"
+        android:layout_marginTop="35dp"
         android:text="Forgot Password?"
         android:textAlignment="center"/>
 
@@ -36,8 +36,8 @@
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/admin_login"
-        android:layout_marginTop="30dp"
+        android:layout_below="@+id/forgot_password"
+        android:layout_marginTop="50dp"
         android:gravity="center_horizontal">
 
         <Button
@@ -49,15 +49,6 @@
             />
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/admin_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login as admin"
-        android:textStyle="bold"
-        android:layout_below="@+id/forgot_password"
-        android:textAlignment="center"
-        android:layout_marginTop="30dp"
-        />
+
 
 </RelativeLayout>
