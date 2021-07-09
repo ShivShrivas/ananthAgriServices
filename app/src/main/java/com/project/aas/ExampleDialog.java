@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class ExampleDialog extends AppCompatDialogFragment {
 
 
@@ -19,9 +22,16 @@ public class ExampleDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
         builder.setTitle("LOG OUT!")
                 .setMessage("Are you sure you want to log out of this account?")
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(getContext(),MainActivity.class));
                     }
                 });
