@@ -86,6 +86,7 @@ public class SignupFragment extends Fragment {
                         ||TextUtils.isEmpty(str_password2)){
                     Toast.makeText(getContext(),"All fields are required",
                             Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
                 }else if(str_password.length()<6){
                     Toast.makeText(getContext(),"password must be" +
                                     " of minimum six characters",

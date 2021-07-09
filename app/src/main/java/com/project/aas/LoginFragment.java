@@ -87,6 +87,7 @@ public class LoginFragment extends Fragment {
                 if(TextUtils.isEmpty(str_mobile)||TextUtils.isEmpty(str_password)){
                     Toast.makeText(getContext(),"All fields are required",
                             Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
                 }else {
                     auth.signInWithEmailAndPassword(str_mobile,str_password)
                             .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
