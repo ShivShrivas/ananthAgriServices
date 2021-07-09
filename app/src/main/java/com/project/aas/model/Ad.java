@@ -6,7 +6,7 @@ public class Ad {
     String title;
     String datePosted;
     String location;
-    String postedBy;
+    String postedBy; // Seller Id
     String price;
     String sellerPhone;
     String imageUrl;

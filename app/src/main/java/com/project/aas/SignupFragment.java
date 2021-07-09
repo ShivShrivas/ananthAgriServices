@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.project.aas.model.UserProfile;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -117,6 +118,11 @@ public class SignupFragment extends Fragment {
                             databaseReference = FirebaseDatabase.getInstance()
                                     .getReference().child("Users").child("name");
 
+//                            UserProfile user = new UserProfile(name,usernameName.toLowerCase(),mobile,
+//                                    email,"",null,null,null);
+//
+//                            updateDatabase(user);
+
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("name", name);
                             hashMap.put("userName", usernameName.toLowerCase());
@@ -143,5 +149,12 @@ public class SignupFragment extends Fragment {
                 });
 
        }
+
+       private void updateDatabase(UserProfile user) {
+           DatabaseReference dbref = FirebaseDatabase.getInstance()
+                   .getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
+           dbref.setValue(user);
+       }
+
 
     }

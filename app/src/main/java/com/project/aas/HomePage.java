@@ -1,6 +1,8 @@
 package com.project.aas;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,25 +27,30 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.aas.adapter.AdRecyclerViewAdapter;
 import com.project.aas.databinding.ActivityHomePageBinding;
 import com.project.aas.model.Ad;
+import com.project.aas.model.UserProfile;
 import com.project.aas.ui.AddAds;
 import com.project.aas.ui.EditProfile;
-import com.project.aas.ui.gallery.GalleryFragment;
 import com.project.aas.ui.slideshow.Blogs;
 import com.project.aas.ui.slideshow.ContactUs;
 import com.project.aas.ui.slideshow.Notifications;
 import com.project.aas.ui.slideshow.Settings;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -61,7 +68,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static android.content.ContentValues.TAG;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -74,7 +80,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private int PERMISSION_ID = 44;
     FloatingActionButton floatingActionButton;
     List<Ad> adsList;
+    private String TAG = "HomePage";
     RecyclerView adsRecyclerView;
+    private FirebaseDatabase mDatabaseReference;
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomePageBinding binding;
@@ -87,6 +95,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(binding.getRoot());
 
         adsList = new ArrayList();
+        mDatabaseReference = FirebaseDatabase.getInstance();
 
 
         setSupportActionBar(binding.appBarHomePage.toolbar);
@@ -124,7 +133,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home_page);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        // NavigationUI.setupWithNavController(navigationView, navController);
 
         bottomNavigationView = findViewById(R.id.bottomView);
         bottomNavigationView.setBackground(null);
@@ -151,20 +159,79 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         imageSlider.startSliding(3000);
     }
 
+
     private void populateList() {
-        Ad dummyAd = new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg");
+        fetchAds();
+    }
 
-        // adding same ad multiple times for testing
-        for(int i=0;i<10;i++) adsList.add(dummyAd);
+    private void uploadAd(Ad ad) {
+        Log.i(TAG, "uploadAd: Started");
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Please Wait...");
+        pd.show();
+        DatabaseReference dbref = mDatabaseReference.getReference().child("Ads");
+        String key = dbref.push().getKey();
 
-        adsRecyclerView.getAdapter().notifyDataSetChanged();
+        dbref.child(key).setValue(ad).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                pd.dismiss();
+                if(task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Ad posted successfully!", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void fetchAds() {
+        DatabaseReference adsRef = mDatabaseReference.getReference("Ads");
+        adsRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.i(TAG, "onDataChange: Found ad with id : "+snapshot.getKey());
+                Ad ad = snapshot.getValue(Ad.class);
+                mDatabaseReference.getReference("Users").child(ad.getPostedBy()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if(task.isSuccessful()) {
+                            UserProfile user = task.getResult().getValue(UserProfile.class);
+                            ad.setPostedBy(user.getName());
+                            adsList.add(ad);
+                            adsRecyclerView.getAdapter().notifyDataSetChanged();
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void initRecyclerView() {
         adsRecyclerView = findViewById(R.id.ad_recycler_view);
         RecyclerView.LayoutManager adsLayoutManager = new GridLayoutManager(this,2);
+
         adsRecyclerView.setHasFixedSize(true);
         adsRecyclerView.setNestedScrollingEnabled(false);
         adsRecyclerView.setLayoutManager(adsLayoutManager);
@@ -215,31 +282,74 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<Location> task) {
-                Location location = task.getResult();
-                if (location != null) {
-                    Geocoder geocoder = new Geocoder(HomePage.this, Locale.getDefault());
-                    try {
-                        List<Address> addresses = geocoder.getFromLocation(
-                                location.getLatitude(), location.getLongitude(), 1
-                        );
-                        locationn.setText(Html.fromHtml(
-                                "<font color='#6200EE'><b>Locality : </b><br></font>"+
-                                        addresses.get(0).getLocality()
-                        ));
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLocation();
             }
-        });
+        }
     }
 
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+        if (isLocationPermissionGranted()) {
+            // Permissions are granted
+            Log.i(TAG, "getLocation: Permissions in place");
+            if(isLocationEnabled()) {
+                Log.i(TAG, "getLocation: Location Enabled");
+                fusedLocationProviderClient.getLastLocation()
+                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                if (location != null) {
+                                    Geocoder geocoder = new Geocoder(HomePage.this, Locale.getDefault());
+                                    try {
+                                        List<Address> addresses = geocoder.getFromLocation(
+                                                location.getLatitude(), location.getLongitude(), 1
+                                        );
+                                        Log.i(TAG, "onSuccess: Found Location");
+                                        locationn.setText(Html.fromHtml(
+                                                "<font color='#6200EE'><b>Locality : </b><br></font>"+
+                                                        addresses.get(0).getLocality()
+                                        ));
+
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        });
+            } else {
+                // Prompt user to turn on location
+                Toast.makeText(this, "Please turn on" + " your location.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        }else {
+            // Else ask for permissions
+            Log.i(TAG, "getLocation: Permissions required");
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
+        }
+    }
+
+    private boolean isLocationPermissionGranted() {
+        // Returns true if permissions are allowed
+        return ActivityCompat
+                .checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        }
+        assert locationManager != null;
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
 }

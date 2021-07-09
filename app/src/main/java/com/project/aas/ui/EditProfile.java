@@ -97,7 +97,6 @@ public class EditProfile extends AppCompatActivity {
     private void uploadProfilePicture(String uri) {
         // Need to create path
         String path = "profile_pictures/"+ FirebaseAuth.getInstance().getCurrentUser().getUid().toString() +".jpeg";
-        // Later 'image.jpeg' will be replaced by uid followed by .jpeg
 
         StorageReference profilePictureRef = FirebaseStorage
                 .getInstance().getReference()
