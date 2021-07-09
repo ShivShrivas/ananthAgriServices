@@ -152,57 +152,12 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void populateList() {
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+        Ad dummyAd = new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
                 "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg");
 
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
-        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
-                "Rs. 1000 per KG","+918989898989",
-                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        // adding same ad multiple times for testing
+        for(int i=0;i<10;i++) adsList.add(dummyAd);
 
         adsRecyclerView.getAdapter().notifyDataSetChanged();
     }

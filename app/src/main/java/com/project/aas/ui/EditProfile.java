@@ -3,6 +3,7 @@ package com.project.aas.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -35,6 +38,7 @@ public class EditProfile extends AppCompatActivity {
     ImageButton back;
     private static int CHOOSE_IMAGE_CODE = 11;
     private String TAG = "EditProfileActivity";
+    private ProgressDialog pd;
 
 
     @Override
@@ -49,6 +53,10 @@ public class EditProfile extends AppCompatActivity {
                 startActivity(new Intent(EditProfile.this,HomePage.class));
             }
         });
+
+        pd = new ProgressDialog(this);
+        pd.setMessage("Please Wait...");
+
 
 
 
@@ -88,7 +96,7 @@ public class EditProfile extends AppCompatActivity {
 
     private void uploadProfilePicture(String uri) {
         // Need to create path
-        String path = "profile_pictures/image.jpeg";
+        String path = "profile_pictures/"+ FirebaseAuth.getInstance().getCurrentUser().getUid().toString() +".jpeg";
         // Later 'image.jpeg' will be replaced by uid followed by .jpeg
 
         StorageReference profilePictureRef = FirebaseStorage
@@ -116,6 +124,7 @@ public class EditProfile extends AppCompatActivity {
                 } else {
                     Log.i(TAG, "onComplete: Encountered an error : "+task.getException().toString());
                 }
+                pd.dismiss();
             }
         });
     }
@@ -128,6 +137,7 @@ public class EditProfile extends AppCompatActivity {
                 // Image successfully selected for uploading
                 String uri = data.getData().toString();
                 Log.i(TAG, "onActivityResult: "+uri);
+                pd.show();
                 uploadProfilePicture(uri);
             }
         }

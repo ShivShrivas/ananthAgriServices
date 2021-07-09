@@ -11,7 +11,7 @@
         android:id="@+id/logo"
         android:layout_width="225dp"
         android:layout_height="215dp"
-        android:src="@drawable/aasa"
+        android:src="@drawable/logo"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"/>
 
