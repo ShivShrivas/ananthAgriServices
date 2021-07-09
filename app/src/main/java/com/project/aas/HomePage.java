@@ -31,7 +31,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.FirebaseDatabase;
+import com.project.aas.adapter.AdRecyclerViewAdapter;
 import com.project.aas.databinding.ActivityHomePageBinding;
+import com.project.aas.model.Ad;
 import com.project.aas.ui.AddAds;
 import com.project.aas.ui.EditProfile;
 import com.project.aas.ui.gallery.GalleryFragment;
@@ -49,6 +51,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -69,6 +73,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     NavigationView navigationView;
     private int PERMISSION_ID = 44;
     FloatingActionButton floatingActionButton;
+    List<Ad> adsList;
+    RecyclerView adsRecyclerView;
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomePageBinding binding;
@@ -79,6 +85,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         binding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        adsList = new ArrayList();
 
 
         setSupportActionBar(binding.appBarHomePage.toolbar);
@@ -93,6 +101,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(intent);
             }
         });
+
+        initRecyclerView();
 
         notifications=findViewById(R.id.notifications);
         notifications.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +149,74 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         slideModels.add(new SlideModel(R.drawable.fer, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels);
         imageSlider.startSliding(3000);
+    }
+
+    private void populateList() {
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+        adsList.add(new Ad("id","Xyz Transport","8 hours ago","Andhra Pradesh","AnanthAgriServices",
+                "Rs. 1000 per KG","+918989898989",
+                "https://ananthagriservices.in/wp-content/uploads/classified-listing/2021/04/IMG_20210314_123034.jpg"));
+
+        adsRecyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    private void initRecyclerView() {
+        adsRecyclerView = findViewById(R.id.ad_recycler_view);
+        RecyclerView.LayoutManager adsLayoutManager = new GridLayoutManager(this,2);
+        adsRecyclerView.setHasFixedSize(true);
+        adsRecyclerView.setNestedScrollingEnabled(false);
+        adsRecyclerView.setLayoutManager(adsLayoutManager);
+        AdRecyclerViewAdapter adapter = new AdRecyclerViewAdapter(adsList,this);
+        adsRecyclerView.setAdapter(adapter);
+        populateList();
+
     }
 
     @Override
