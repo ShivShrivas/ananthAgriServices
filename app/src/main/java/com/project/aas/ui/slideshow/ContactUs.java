@@ -6,6 +6,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -18,7 +21,7 @@ import com.project.aas.R;
 
 public class ContactUs extends AppCompatActivity {
 
-    ImageView phone,chat;
+    ImageView phone,chat,copybuttonone, copybuttontwo;
     private static final int REQUEST_CALL=1;
 
     @Override
@@ -39,6 +42,31 @@ public class ContactUs extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 makePhoneCall();
+            }
+        });
+        copybuttonone=findViewById(R.id.copyone);
+        copybuttonone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("copybuttoneone", "9704218219");
+                clipboard.setPrimaryClip(clip);
+                clip.getDescription();
+
+                Toast.makeText(ContactUs.this, "number copied to clipboard", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        copybuttontwo=findViewById(R.id.copytwo);
+        copybuttontwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("copybuttontwo", "ananthagriservices@gmail.com");
+                clipboard.setPrimaryClip(clip);
+                clip.getDescription();
+
+                Toast.makeText(ContactUs.this, "number copied to clipboard", Toast.LENGTH_SHORT).show();
             }
         });
     }

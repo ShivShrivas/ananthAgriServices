@@ -46,6 +46,7 @@ import com.project.aas.ui.AddAds;
 import com.project.aas.ui.EditProfile;
 import com.project.aas.ui.slideshow.Blogs;
 import com.project.aas.ui.slideshow.ContactUs;
+import com.project.aas.ui.slideshow.Feedback;
 import com.project.aas.ui.slideshow.Notifications;
 import com.project.aas.ui.slideshow.Settings;
 
@@ -274,12 +275,23 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         if (id == R.id.settings) {
             startActivity(new Intent(HomePage.this, Settings.class));
         }
+        if(id==R.id.feedback){
+            startActivity(new Intent(HomePage.this, Feedback.class));
+        }
+        if (id==R.id.privacy){
+            openDialog1();
+        }
         return false;
     }
 
     public void openDialog() {
         ExampleDialog exampleDialog = new ExampleDialog();
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
+    }
+
+    private void openDialog1(){
+        PrivacyDialog privacyDialog = new PrivacyDialog();
+        privacyDialog.show(getSupportFragmentManager(),"dialog");
     }
 
     @Override
