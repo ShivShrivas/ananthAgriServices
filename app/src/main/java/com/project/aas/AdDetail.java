@@ -70,13 +70,7 @@ public class AdDetail extends AppCompatActivity {
         });
 
 
-        binding.btnSaveAd.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                v.setBackground(getDrawable(R.drawable.ic_heart_red));
-            }
-        });
     }
 
 
