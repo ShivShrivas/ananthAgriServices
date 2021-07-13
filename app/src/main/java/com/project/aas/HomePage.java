@@ -32,6 +32,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -78,7 +80,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     FusedLocationProviderClient fusedLocationProviderClient;
     TextView locationn;
     NavigationView navigationView;
-    private int PERMISSION_ID = 44;
+    private int PERMISSION_ID = 44; 
     FloatingActionButton floatingActionButton;
     List<Ad> adsList;
     private String TAG = "HomePage";
@@ -91,6 +93,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // startActivity(new Intent(this,AdDetail.class));
 
         binding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -143,8 +147,18 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.edit_profilebo:
-                        Intent intent1 = new Intent(HomePage.this, EditProfile.class);
-                        startActivity(intent1);
+                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        if(currentUser==null){
+                            Toast.makeText(getApplicationContext(),"You need to Login first.",Toast.LENGTH_SHORT).show();
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean("showSignUpPage",true);
+                            Intent intent = new Intent(HomePage.this, MainActivity.class);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+
+                        }else {
+                            startActivity(new Intent(HomePage.this, EditProfile.class));
+                        }
                         break;
                 }
                 return false;
@@ -172,6 +186,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         pd.show();
         DatabaseReference dbref = mDatabaseReference.getReference().child("Ads");
         String key = dbref.push().getKey();
+        ad.setId(key);
 
         dbref.child(key).setValue(ad).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
