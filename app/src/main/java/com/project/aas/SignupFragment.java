@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.project.aas.model.UserProfile;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +33,7 @@ public class SignupFragment extends Fragment {
 
     private Button register;
     EditText name,mobile,email,password,password2;
-
+    TextView terms;
     FirebaseAuth auth;
     DatabaseReference databaseReference;
     ProgressDialog pd;
@@ -66,6 +66,13 @@ public class SignupFragment extends Fragment {
         email=view.findViewById(R.id.emailid_signup);
         password=view.findViewById(R.id.password_signup);
         password2=view.findViewById(R.id.password2);
+        terms=view.findViewById(R.id.terms);
+        terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
 
         auth=FirebaseAuth.getInstance();
 
@@ -118,11 +125,6 @@ public class SignupFragment extends Fragment {
                             databaseReference = FirebaseDatabase.getInstance()
                                     .getReference().child("Users").child("name");
 
-//                            UserProfile user = new UserProfile(name,usernameName.toLowerCase(),mobile,
-//                                    email,"",null,null,null);
-//
-//                            updateDatabase(user);
-
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("name", name);
                             hashMap.put("userName", usernameName.toLowerCase());
@@ -150,11 +152,8 @@ public class SignupFragment extends Fragment {
 
        }
 
-       private void updateDatabase(UserProfile user) {
-           DatabaseReference dbref = FirebaseDatabase.getInstance()
-                   .getReference().child("Users").child(FirebaseAuth.getInstance().getUid());
-           dbref.setValue(user);
-       }
-
-
+    public void openDialog() {
+        ExampleDialog1 exampleDialog = new ExampleDialog1();
+        exampleDialog.show(getParentFragmentManager(), "example dialog");
     }
+}
