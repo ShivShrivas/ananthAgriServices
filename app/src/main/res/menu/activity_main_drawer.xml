@@ -14,14 +14,6 @@
             android:icon="@drawable/contact_phone_24"
             android:title="Contact us" />
         <item
-            android:id="@+id/orders"
-            android:icon="@drawable/ordera"
-            android:title="Orders" />
-        <item
-            android:id="@+id/myBookings"
-            android:icon="@drawable/booking"
-            android:title="My bookings" />
-        <item
             android:id="@+id/internshipform"
             android:icon="@drawable/clipboard"
             android:title="Internship form" />

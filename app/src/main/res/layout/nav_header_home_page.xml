@@ -37,11 +37,4 @@
         android:layout_below="@+id/aa"
         android:text="ananthagriservices@xxxx" />
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/wallet" />
-
 </RelativeLayout>

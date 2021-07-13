@@ -5,10 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
 
     <application
         android:allowBackup="true"
@@ -17,12 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AAS">
-
-        <activity android:name=".AdDetail"></activity>
-
-        <activity android:name=".ui.slideshow.Feedback"></activity>
+        <activity android:name=".ui.slideshow.MyOrders"></activity>
+        <activity android:name=".AdDetail" />
+        <activity android:name=".getStarted" />
+        <activity android:name=".ui.gallery.MainActivity" />
+        <activity android:name=".ui.slideshow.Feedback" />
         <activity android:name=".ui.gallery.AddPhoto" />
-
         <activity android:name=".ui.slideshow.Notifications" />
         <activity android:name=".ui.slideshow.ContactUs" />
         <activity android:name=".ui.slideshow.Settings" />

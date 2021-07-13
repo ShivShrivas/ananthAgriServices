@@ -49,6 +49,7 @@ import com.project.aas.ui.EditProfile;
 import com.project.aas.ui.slideshow.Blogs;
 import com.project.aas.ui.slideshow.ContactUs;
 import com.project.aas.ui.slideshow.Feedback;
+import com.project.aas.ui.slideshow.MyOrders;
 import com.project.aas.ui.slideshow.Notifications;
 import com.project.aas.ui.slideshow.Settings;
 
@@ -142,7 +143,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         bottomNavigationView = findViewById(R.id.bottomView);
         bottomNavigationView.setBackground(null);
         bottomNavigationView.getMenu().getItem(2).setEnabled(false);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+       /* bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -156,20 +157,23 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                             intent.putExtras(bundle);
                             startActivity(intent);
 
-                        }else {
-                            startActivity(new Intent(HomePage.this, EditProfile.class));
+                       // }else {
+                         //   startActivity(new Intent(HomePage.this, EditProfile.class));
                         }
                         break;
+                    case R.id.orders:
+                        startActivity(new Intent(HomePage.this, MyOrders.class));
+
                 }
                 return false;
             }
-        });
+        });*/
 
         final ImageSlider imageSlider = findViewById(R.id.flipper);
         List<SlideModel> slideModels = new ArrayList<>();
-        slideModels.add(new SlideModel(R.drawable.tra, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.agr, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.fer, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.s1, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.s2, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.s3, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels);
         imageSlider.startSliding(3000);
     }
@@ -295,6 +299,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         }
         if (id==R.id.privacy){
             openDialog1();
+        }
+        if(id == R.id.orders){
+            startActivity(new Intent(HomePage.this, MyOrders.class));
         }
         return false;
     }

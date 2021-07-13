@@ -28,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.project.aas.HomePage;
 import com.project.aas.R;
+import com.project.aas.ui.slideshow.MyOrders;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -79,6 +80,9 @@ public class EditProfile extends AppCompatActivity {
                     case R.id.homePage:
                         Intent intent1 = new Intent(EditProfile.this, HomePage.class);
                         startActivity(intent1);
+
+                    case R.id.orders:
+                        startActivity(new Intent(EditProfile.this, MyOrders.class));
                 }
                 return false;
             }
