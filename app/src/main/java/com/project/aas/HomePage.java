@@ -143,11 +143,11 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         bottomNavigationView = findViewById(R.id.bottomView);
         bottomNavigationView.setBackground(null);
         bottomNavigationView.getMenu().getItem(2).setEnabled(false);
-       /* bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+       bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.edit_profilebo:
+                /*     case R.id.edit_profilebo:
                         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                         if(currentUser==null){
                             Toast.makeText(getApplicationContext(),"You need to Login first.",Toast.LENGTH_SHORT).show();
@@ -160,14 +160,13 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                        // }else {
                          //   startActivity(new Intent(HomePage.this, EditProfile.class));
                         }
-                        break;
+                        break;*/
                     case R.id.orders:
-                        startActivity(new Intent(HomePage.this, MyOrders.class));
-
+                        startActivity(new Intent(HomePage.this, editFragment.class));
                 }
                 return false;
             }
-        });*/
+        });
 
         final ImageSlider imageSlider = findViewById(R.id.flipper);
         List<SlideModel> slideModels = new ArrayList<>();
