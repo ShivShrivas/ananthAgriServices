@@ -1,6 +1,8 @@
 package com.project.aas.model;
 
-public class Ad {
+import java.io.Serializable;
+
+public class Ad implements Serializable {
 
     String id;
     String title;
@@ -10,10 +12,11 @@ public class Ad {
     String price;
     String sellerPhone;
     String imageUrl;
+    String description;
 
     public Ad() {}
 
-    public Ad(String id, String title, String datePosted, String location, String postedBy, String price, String sellerPhone, String imageUrl) {
+    public Ad(String id, String title, String description, String datePosted, String location, String postedBy, String price, String sellerPhone, String imageUrl) {
         this.id = id;
         this.title = title;
         this.datePosted = datePosted;
@@ -22,6 +25,15 @@ public class Ad {
         this.price = price;
         this.sellerPhone = sellerPhone;
         this.imageUrl = imageUrl;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTitle() {
