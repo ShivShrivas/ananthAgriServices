@@ -15,9 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AAS">
-        <activity android:name=".ui.slideshow.MyOrders"></activity>
+        <activity android:name=".ui.slideshow.OtpVerification"></activity>
+        <activity android:name=".ui.slideshow.PhoneNumber" />
+        <activity android:name=".ui.slideshow.MyOrders" />
         <activity android:name=".AdDetail" />
-        <activity android:name=".getStarted" />
+
         <activity android:name=".ui.gallery.MainActivity" />
         <activity android:name=".ui.slideshow.Feedback" />
         <activity android:name=".ui.gallery.AddPhoto" />
@@ -32,7 +34,7 @@
             android:name=".HomePage"
             android:label="@string/title_activity_home_page"
             android:theme="@style/Theme.AAS.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".getStarted">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

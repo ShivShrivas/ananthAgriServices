@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.slideshow.PhoneNumber">
+
+
+    <TextView
+        android:id="@+id/enter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Enter your mobile number"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginTop="200dp"/>
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Mobile Number"
+        android:textSize="21dp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:background="@drawable/custom_edit_text"
+        android:textColorHint="@android:color/darker_gray"
+        android:ems="10"
+        android:layout_marginTop="50dp"
+        android:drawableLeft="@drawable/phone_24"
+        android:drawablePadding="15dp"
+        />
+    <Button
+        android:id="@+id/verify"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text="Get OTP"
+        android:background="@drawable/round_button"
+        android:layout_marginTop="130dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+
+</LinearLayout>

@@ -51,6 +51,7 @@ import com.project.aas.ui.slideshow.ContactUs;
 import com.project.aas.ui.slideshow.Feedback;
 import com.project.aas.ui.slideshow.MyOrders;
 import com.project.aas.ui.slideshow.Notifications;
+import com.project.aas.ui.slideshow.PhoneNumber;
 import com.project.aas.ui.slideshow.Settings;
 
 import androidx.annotation.NonNull;
@@ -146,7 +147,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()) {
+                final int id = item.getItemId();
                 /*     case R.id.edit_profilebo:
                         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                         if(currentUser==null){
@@ -161,8 +162,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                          //   startActivity(new Intent(HomePage.this, EditProfile.class));
                         }
                         break;*/
-                    case R.id.orders:
-                        startActivity(new Intent(HomePage.this, editFragment.class));
+                    if(id==R.id.orders) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home_page, new editFragment()).commit();
                 }
                 return false;
             }
@@ -170,9 +171,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         final ImageSlider imageSlider = findViewById(R.id.flipper);
         List<SlideModel> slideModels = new ArrayList<>();
-        slideModels.add(new SlideModel(R.drawable.s1, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.s2, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.s3, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.ss1, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.ss2, ScaleTypes.FIT));
+        slideModels.add(new SlideModel(R.drawable.ss3, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels);
         imageSlider.startSliding(3000);
     }
@@ -286,6 +287,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         }
         if (id == R.id.logout) {
             openDialog();
+        }
+        if(id== R.id.explore){
+            startActivity(new Intent(HomePage.this, PhoneNumber.class));
         }
         if (id == R.id.contact) {
             startActivity(new Intent(HomePage.this, ContactUs.class));
