@@ -18,17 +18,18 @@ import com.bumptech.glide.Glide;
 import com.project.aas.AdDetail;
 import com.project.aas.R;
 import com.project.aas.model.Ad;
+import com.project.aas.model.AdPost;
 
 import java.util.List;
 
 
 public class AdRecyclerViewAdapter extends RecyclerView.Adapter<AdRecyclerViewAdapter.ViewHolder>{
 
-    private final List<Ad> mAdsList;
+    private final List<AdPost> mAdsList;
     private final Context mContext;
     private static String TAG = "AdRecyclerViewAdapter";
 
-    public AdRecyclerViewAdapter(List<Ad> mAdsList, Context context) {
+    public AdRecyclerViewAdapter(List<AdPost> mAdsList, Context context) {
         this.mAdsList = mAdsList;
         this.mContext = context;
     }
@@ -43,7 +44,7 @@ public class AdRecyclerViewAdapter extends RecyclerView.Adapter<AdRecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull AdRecyclerViewAdapter.ViewHolder holder, int position) {
         Glide.with(mContext)
-                .load(mAdsList.get(position).getImageUrl())
+                .load(mAdsList.get(position).getImageUrls().get(0))
                 .placeholder(R.drawable.ic_baseline_broken_image_24)
                 .into(holder.img);
 
@@ -54,7 +55,7 @@ public class AdRecyclerViewAdapter extends RecyclerView.Adapter<AdRecyclerViewAd
         holder.location.setText(mAdsList.get(position).getLocation());
         holder.postedBy.setText(mAdsList.get(position).getPostedBy());
         holder.datePosted.setText(mAdsList.get(position).getDatePosted());
-        holder.price.setText(mAdsList.get(position).getPrice());
+        holder.price.setText("Rs. " + mAdsList.get(position).getPrice());
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
