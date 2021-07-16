@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.project.aas.ui.AddAds;
 import com.project.aas.ui.slideshow.PhoneNumber;
 
 public class getStarted extends AppCompatActivity {
@@ -22,7 +23,8 @@ public class getStarted extends AppCompatActivity {
         getStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(com.project.aas.getStarted.this, PhoneNumber.class));
+                // startActivity(new Intent(com.project.aas.getStarted.this, PhoneNumber.class));
+                startActivity(new Intent(com.project.aas.getStarted.this, HomePage.class));
             }
         });
     }

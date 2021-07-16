@@ -43,6 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.aas.adapter.AdRecyclerViewAdapter;
 import com.project.aas.databinding.ActivityHomePageBinding;
 import com.project.aas.model.Ad;
+import com.project.aas.model.AdPost;
 import com.project.aas.model.UserProfile;
 import com.project.aas.ui.AddAds;
 import com.project.aas.ui.EditProfile;
@@ -84,7 +85,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     NavigationView navigationView;
     private int PERMISSION_ID = 44; 
     FloatingActionButton floatingActionButton;
-    List<Ad> adsList;
+    List<AdPost> adsList;
     private String TAG = "HomePage";
     RecyclerView adsRecyclerView;
     private FirebaseDatabase mDatabaseReference;
@@ -95,8 +96,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // startActivity(new Intent(this,AdDetail.class));
 
         binding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -144,7 +143,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         bottomNavigationView = findViewById(R.id.bottomView);
         bottomNavigationView.setBackground(null);
         bottomNavigationView.getMenu().getItem(2).setEnabled(false);
-       bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 final int id = item.getItemId();
@@ -183,27 +182,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         fetchAds();
     }
 
-    private void uploadAd(Ad ad) {
-        Log.i(TAG, "uploadAd: Started");
-        ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Please Wait...");
-        pd.show();
-        DatabaseReference dbref = mDatabaseReference.getReference().child("Ads");
-        String key = dbref.push().getKey();
-        ad.setId(key);
-
-        dbref.child(key).setValue(ad).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                pd.dismiss();
-                if(task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Ad posted successfully!", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(), "Something went wrong..", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
 
     private void fetchAds() {
         DatabaseReference adsRef = mDatabaseReference.getReference("Ads");
@@ -211,13 +189,13 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Log.i(TAG, "onDataChange: Found ad with id : "+snapshot.getKey());
-                Ad ad = snapshot.getValue(Ad.class);
+                AdPost ad = snapshot.getValue(AdPost.class);
                 mDatabaseReference.getReference("Users").child(ad.getPostedBy()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if(task.isSuccessful()) {
                             UserProfile user = task.getResult().getValue(UserProfile.class);
-                            ad.setPostedBy(user.getName());
+                            // ad.setPostedBy(user.getName());
                             adsList.add(ad);
                             adsRecyclerView.getAdapter().notifyDataSetChanged();
                         }
