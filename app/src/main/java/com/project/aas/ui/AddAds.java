@@ -104,7 +104,8 @@ public class AddAds extends AppCompatActivity {
             if(mAdImageUrls.size() == 0) {
                 Toast.makeText(this, "You need to upload atleast ONE image of the product.", Toast.LENGTH_SHORT).show();
             }else {
-                if(mCheckBox.isActivated()) {
+                if(mCheckBox.isChecked()) {
+                    Log.i(TAG, "onSubmit: Activated");
                     AdPost mNewAd = createPost();
                     uploadAd(mNewAd);
                 }else {
@@ -127,8 +128,9 @@ public class AddAds extends AppCompatActivity {
         for(int i=0;i<mAdImageUris.size();i++) {
             if(i==10) break;
             pd.show();
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(Calendar.getInstance().getTime());
             //String path = "ads/"+ FirebaseAuth.getInstance().getCurrentUser().getUid().toString()+"/img"+i +".jpeg";
-            String path = "ads/testUser/img"+i +".jpeg";
+            String path = "ads/testUser/"+timeStamp +".jpeg";
             StorageReference adPictureRef = FirebaseStorage
                     .getInstance().getReference()
                     .child(path);
