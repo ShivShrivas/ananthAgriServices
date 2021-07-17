@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 import com.project.aas.HomePage;
 import com.project.aas.R;
 import com.project.aas.ui.slideshow.MyOrders;
+import com.project.aas.ui.slideshow.SavedAds;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -61,33 +63,28 @@ public class EditProfile extends AppCompatActivity {
 
 
 
-        ImageButton btn = findViewById(R.id.btn_upload_image);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
 
         bottomNavigationView=findViewById(R.id.bottomView);
         bottomNavigationView.setBackground(null);
         bottomNavigationView.setSelectedItemId(R.id.edit_profilebo);
-        bottomNavigationView.getMenu().getItem(2).setEnabled(false);
+        bottomNavigationView.getMenu().getItem(4).setEnabled(false);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.homePage:
-                        Intent intent1 = new Intent(EditProfile.this, HomePage.class);
-                        startActivity(intent1);
-
-                    case R.id.orders:
-                        startActivity(new Intent(EditProfile.this, MyOrders.class));
+                int id = item.getItemId();
+                if (id == R.id.homePage) {
+                    Intent intent1 = new Intent(EditProfile.this, HomePage.class);
+                    startActivity(intent1);
+                }
+                if (id == R.id.orders) {
+                    startActivity(new Intent(EditProfile.this, MyOrders.class));
+                }
+                if(id==R.id.savedAds){
+                    startActivity(new Intent(EditProfile.this, SavedAds.class));
                 }
                 return false;
             }
         });
-
     }
 
     private void openGallery() {

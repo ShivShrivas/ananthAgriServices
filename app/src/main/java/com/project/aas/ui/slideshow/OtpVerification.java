@@ -54,7 +54,7 @@ public class OtpVerification extends AppCompatActivity implements TextWatcher {
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!ed1.getText().toString().trim().isEmpty()&&
+              /*  if(!ed1.getText().toString().trim().isEmpty()&&
                         !ed2.getText().toString().trim().isEmpty()&&
                         !ed3.getText().toString().trim().isEmpty()&&
                         !ed4.getText().toString().trim().isEmpty()&&
@@ -75,7 +75,7 @@ public class OtpVerification extends AppCompatActivity implements TextWatcher {
                                     @Override
                                     public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                                         if(task.isSuccessful()){
-                                           Intent intent = new Intent(OtpVerification.this,HomePage.class);
+                                           Intent intent = new Intent(OtpVerification.this,UserDetailsActivity.class);
                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                            startActivity(intent);
 
@@ -87,7 +87,7 @@ public class OtpVerification extends AppCompatActivity implements TextWatcher {
                         Toast.makeText(OtpVerification.this,"check internet connection",
                                 Toast.LENGTH_SHORT).show();
                     }
-                }
+                }*/startActivity(new Intent(OtpVerification.this,HomePage.class));
             }
         });
 

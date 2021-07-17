@@ -50,9 +50,11 @@ import com.project.aas.ui.EditProfile;
 import com.project.aas.ui.slideshow.Blogs;
 import com.project.aas.ui.slideshow.ContactUs;
 import com.project.aas.ui.slideshow.Feedback;
+import com.project.aas.ui.slideshow.InternshipForm;
 import com.project.aas.ui.slideshow.MyOrders;
 import com.project.aas.ui.slideshow.Notifications;
 import com.project.aas.ui.slideshow.PhoneNumber;
+import com.project.aas.ui.slideshow.SavedAds;
 import com.project.aas.ui.slideshow.Settings;
 
 import androidx.annotation.NonNull;
@@ -73,7 +75,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -162,8 +163,17 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                         }
                         break;*/
                     if(id==R.id.orders) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home_page, new editFragment()).commit();
+                        startActivity(new Intent(HomePage.this,MyOrders.class));
                 }
+                    if(id==R.id.edit_profilebo){
+                        startActivity(new Intent(HomePage.this, EditProfile.class));
+                    }
+                    if(id==R.id.homePage){
+                        startActivity(new Intent(HomePage.this,HomePage.class));
+                    }
+                    if(id==R.id.savedAds){
+                        startActivity(new Intent(HomePage.this, SavedAds.class));
+                    }
                 return false;
             }
         });
@@ -266,20 +276,20 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         if (id == R.id.logout) {
             openDialog();
         }
-        if(id== R.id.explore){
-            startActivity(new Intent(HomePage.this, PhoneNumber.class));
-        }
         if (id == R.id.contact) {
             startActivity(new Intent(HomePage.this, ContactUs.class));
         }
         if (id == R.id.settings) {
             startActivity(new Intent(HomePage.this, Settings.class));
         }
-        if(id==R.id.feedback){
+        if(id==R.id.Education){
             startActivity(new Intent(HomePage.this, Feedback.class));
         }
         if (id==R.id.privacy){
             openDialog1();
+        }
+        if(id==R.id.internshipform){
+            startActivity(new Intent(HomePage.this, InternshipForm.class));
         }
         if(id == R.id.orders){
             startActivity(new Intent(HomePage.this, MyOrders.class));

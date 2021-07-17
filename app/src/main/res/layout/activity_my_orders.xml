@@ -45,13 +45,13 @@
             android:id="@+id/imagorder"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/orderr"/>
+            android:src="@drawable/order"/>
 
     </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Orders Yet"
+            android:text="No Ads Posted "
             android:gravity="center_horizontal"
             android:textStyle="bold"
             android:textColor="@color/black"

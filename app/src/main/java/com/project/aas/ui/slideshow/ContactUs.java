@@ -15,13 +15,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.AboutUs;
+import com.project.aas.HomePage;
 import com.project.aas.R;
 
 public class ContactUs extends AppCompatActivity {
+    TextView backt;
 
-    ImageView phone,chat,copybuttonone, copybuttontwo;
+    ImageView phone,chat,copybuttonone, copybuttontwo,back;
     private static final int REQUEST_CALL=1;
 
     @Override
@@ -54,6 +58,21 @@ public class ContactUs extends AppCompatActivity {
                 clip.getDescription();
 
                 Toast.makeText(ContactUs.this, "number copied to clipboard", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        back=findViewById(R.id.backk);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ContactUs.this, HomePage.class));
+            }
+        });
+        backt=findViewById(R.id.backkk);
+        backt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ContactUs.this, HomePage.class));
             }
         });
 

@@ -41,7 +41,7 @@ public class PhoneNumber extends AppCompatActivity {
         send_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!phoneNumber.getText().toString().trim().isEmpty())
+              /*  if(!phoneNumber.getText().toString().trim().isEmpty())
                 {if(phoneNumber.getText().toString().length()==10){
                     PhoneAuthProvider.getInstance().verifyPhoneNumber("+91"
                                     + phoneNumber.getText().toString(), 100, TimeUnit.SECONDS,
@@ -76,6 +76,8 @@ public class PhoneNumber extends AppCompatActivity {
                     Toast.makeText(PhoneNumber.this,"enter a phone number",Toast.LENGTH_SHORT).show();
                 }
 
+            }*/
+                startActivity(new Intent(PhoneNumber.this,OtpVerification.class));
             }
         });
 

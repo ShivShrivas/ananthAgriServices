@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AAS">
+        <activity android:name=".ui.home.Portfolio"></activity>
+        <activity android:name=".ui.slideshow.InternshipForm" />
         <activity android:name=".ui.slideshow.OtpVerification" />
+        <activity android:name=".ui.slideshow.SavedAds" />
         <activity android:name=".ui.slideshow.PhoneNumber" />
         <activity android:name=".ui.slideshow.MyOrders" />
         <activity android:name=".AdDetail" />

@@ -102,7 +102,7 @@ public class PrivacyDialog extends AppCompatDialogFragment {
                         "Contact Us\n" +
                         "\n" +
                         "If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at info@ananthagriservices.in")
-                .setNegativeButton("Agree", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

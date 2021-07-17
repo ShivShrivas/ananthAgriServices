@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.project.aas.ui.slideshow.PhoneNumber;
 
 public class ExampleDialog extends AppCompatDialogFragment {
 
@@ -31,7 +32,7 @@ public class ExampleDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(getContext(),MainActivity.class));
+                        startActivity(new Intent(getContext(), PhoneNumber.class));
                     }
                 });
 
