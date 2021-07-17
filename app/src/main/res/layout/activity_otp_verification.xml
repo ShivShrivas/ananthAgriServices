@@ -28,80 +28,104 @@
             android:id="@+id/ed1"
             android:layout_width="40dp"
             android:layout_height="50dp"
-            android:background="@drawable/otp"
+            android:background="@drawable/custom_edit_text"
             android:textSize="15sp"
+            android:inputType="number"
             android:padding="10dp"
             android:textAlignment="center"
-            android:textColor="#fff"
+            android:textColor="@android:color/black"
             android:cursorVisible="false"/>
         <EditText
             android:id="@+id/ed2"
             android:layout_width="40dp"
             android:layout_height="50dp"
-            android:background="@drawable/otp"
+            android:background="@drawable/custom_edit_text"
             android:textSize="15sp"
+            android:inputType="number"
             android:layout_toRightOf="@+id/ed1"
             android:layout_marginLeft="15dp"
             android:padding="10dp"
             android:textAlignment="center"
-            android:textColor="#fff"
+            android:textColor="@android:color/black"
             android:cursorVisible="false"/>
         <EditText
         android:id="@+id/ed3"
         android:layout_width="40dp"
         android:layout_height="50dp"
-        android:background="@drawable/otp"
+            android:background="@drawable/custom_edit_text"
         android:textSize="15sp"
+            android:inputType="number"
             android:layout_toRightOf="@+id/ed2"
             android:layout_marginLeft="15dp"
         android:padding="10dp"
         android:textAlignment="center"
-        android:textColor="#fff"
+            android:textColor="@android:color/black"
         android:cursorVisible="false"/>
         <EditText
         android:id="@+id/ed4"
         android:layout_width="40dp"
         android:layout_height="50dp"
-        android:background="@drawable/otp"
+            android:background="@drawable/custom_edit_text"
         android:textSize="15sp"
+            android:inputType="number"
             android:layout_toRightOf="@+id/ed3"
             android:layout_marginLeft="15dp"
         android:padding="10dp"
         android:textAlignment="center"
-        android:textColor="#fff"
+            android:textColor="@android:color/black"
         android:cursorVisible="false"/>
         <EditText
             android:id="@+id/ed5"
             android:layout_width="40dp"
             android:layout_height="50dp"
-            android:background="@drawable/otp"
+            android:background="@drawable/custom_edit_text"
             android:textSize="15sp"
             android:layout_toRightOf="@+id/ed4"
             android:layout_marginLeft="15dp"
             android:padding="10dp"
+            android:inputType="number"
             android:textAlignment="center"
-            android:textColor="#fff"
+            android:textColor="@android:color/black"
             android:cursorVisible="false"/>
         <EditText
             android:id="@+id/ed6"
             android:layout_width="40dp"
             android:layout_height="50dp"
-            android:background="@drawable/otp"
+            android:background="@drawable/custom_edit_text"
             android:textSize="15sp"
             android:layout_toRightOf="@+id/ed5"
             android:layout_marginLeft="15dp"
             android:padding="10dp"
             android:textAlignment="center"
-            android:textColor="#fff"
+            android:textColor="@android:color/black"
+            android:inputType="number"
             android:cursorVisible="false"/>
 
+
+
     </RelativeLayout>
+
+
+
+        <TextView
+            android:id="@+id/resemnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rela"
+            android:gravity="right"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="30dp"
+            android:text="Resent otp" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_below="@+id/rela">
+
+
+
         <Button
             android:id="@+id/otpVerify"
             android:layout_width="170dp"
@@ -109,7 +133,7 @@
             android:text="Verify"
             android:background="@drawable/round_button"
             android:layout_marginTop="130dp"
-            android:layout_below="@+id/rela"
+            android:layout_below="@+id/resemnd"
             android:gravity="center_horizontal"/>
 
     </LinearLayout>

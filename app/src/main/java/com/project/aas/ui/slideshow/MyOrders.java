@@ -50,11 +50,15 @@ public class MyOrders extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.homePage:
-                        startActivity(new Intent(MyOrders.this,HomePage.class));
-                    case R.id.edit_profilebo:
+                int id = item.getItemId();
+                    if(id==R.id.homePage) {
+                        startActivity(new Intent(MyOrders.this, HomePage.class));
+                    }
+                   if(id==R.id.edit_profilebo){
                         startActivity(new Intent(MyOrders.this,EditProfile.class));
+                }
+                if(id==R.id.savedAds){
+                    startActivity(new Intent(MyOrders.this, SavedAds.class));
                 }
                 return false;
             }

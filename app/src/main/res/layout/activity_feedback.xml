@@ -5,40 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.slideshow.Feedback">
+      <com.google.android.material.appbar.AppBarLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/green"
+          android:theme="@style/Theme.AAS.AppBarOverlay">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/Theme.AAS.PopupOverlay" >
+                  <androidx.coordinatorlayout.widget.CoordinatorLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/backk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:hint="Name"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="25dp"
-        android:id="@+id/edit1" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edit1"
-        android:layout_marginLeft="25dp"
-        android:hint="Feedback"
-        android:textSize="17sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="25dp"
-        android:id="@+id/edit2" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edit2"
-        android:layout_marginTop="100dp"
-        android:gravity="center">
-        <Button
-            android:id="@+id/send_feedback"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:text="send"
-            android:background="@drawable/round_button"/>
-    </LinearLayout>
+                            android:src="@drawable/arrow_back"
+                            android:layout_marginLeft="15dp"/>
+                        <TextView
+                            android:id="@+id/backkk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Back"
+                            android:layout_marginLeft="35dp"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:gravity="center_vertical"/>
+                  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+            </androidx.appcompat.widget.Toolbar>
+      </com.google.android.material.appbar.AppBarLayout>
+
+
+      <WebView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/webView"/>
 </RelativeLayout>

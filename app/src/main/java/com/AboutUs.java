@@ -2,18 +2,41 @@ package com;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.project.aas.HomePage;
 import com.project.aas.R;
+import com.project.aas.ui.home.Portfolio;
+import com.project.aas.ui.slideshow.Blogs;
 
 public class AboutUs extends AppCompatActivity {
+
+    ImageView back,folio;
+    TextView backt,port;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
 
+        port=findViewById(R.id.port);
+        folio=findViewById(R.id.folio);
+        port.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AboutUs.this, Portfolio.class));
+            }
+        });
+        folio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AboutUs.this, Portfolio.class));
+            }
+        });
         TextView textView = (TextView)findViewById(R.id.aboutmessage);
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -29,5 +52,21 @@ public class AboutUs extends AppCompatActivity {
                 "ANANTH AGRI SERVICES is recognized as a start up by government of India and companies act. ";
         stringBuilder.append(someMessage);
         textView.setText(stringBuilder.toString());
+
+
+        back=findViewById(R.id.backk);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AboutUs.this, HomePage.class));
+            }
+        });
+        backt=findViewById(R.id.backkk);
+        backt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AboutUs.this, HomePage.class));
+            }
+        });
     }
 }

@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class ExampleeDialog extends AppCompatDialogFragment {
 
-    final String num = "+6302086144";
+    final String num = "+9704218219";
 
     @NonNull
     @Override

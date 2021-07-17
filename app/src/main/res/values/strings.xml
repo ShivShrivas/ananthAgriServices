@@ -14,4 +14,77 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="_5_26_dantlapalli_talamarala_kothacheruvu_ananthapur_andhra_pradesh_515133_india">5/26,Dantlapalli,Talamarala,kothacheruvu,Ananthapur,Andhra Pradesh,515133,india</string>
+
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="username">Username</string>
+    <string name="notification">Notification</string>
+    <string name="create_password_or_change_password">Create password or change password</string>
+    <string name="notification_turn_on_or_off">Notification turn on or off</string>
+    <string name="logout">Logout</string>
+    <string name="logout_your_account">logout your Account</string>
+    <string name="help_and_faq">help and FAQ</string>
+    <string name="help_faq"><![CDATA[Help & FAQ]]></string>
+    <string name="internship_registration_from">Internship Registration Form</string>
+    <string name="ananth_agri_services_llp_is_hiring_candidates_for_field_officers_business_executives_content_writers_and_digital_marketing"><![CDATA[Ananth Agri Services LLP is hiring candidates for Field officers&Business Executives,content writers,and Digital marketing.]]></string>
+    <string name="interview_time_and_platform_will_be_informed_through_whatsapp_group_sms_or_mail">Interview time and platform will be informed through whatsapp group ,SMS,or mail</string>
+    <string name="the_name_and_photo_associated_with_your_google_account_will_be_recorded_when_you_upload_files_and_submit_this_form">The name and photo associated with your Google Account will be recorded when you upload files and submit this form</string>
+    <string name="untittle_section">Untittle Section</string>
+    <string name="name">Name -</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="phone_number2">Phone Number -</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_ans1">Your Answer</string>
+    <string name="whats_app_number">Whats App Number -</string>
+    <string name="your_answer">Your Answer</string>
+    <string name="your_answer2">Your Answer</string>
+    <string name="email_id">Email Id -</string>
+    <string name="date_of_birth">Date Of Birth -</string>
+    <string name="college_university">College/University</string>
+    <string name="education">Education</string>
+    <string name="address"> Address  -  </string>
+    <string name="state">State</string>
+    <string name="State2">State -</string>
+    <string name="internship_role">Internship Role -</string>
+    <string name="content_writer">Content Writer</string>
+    <string name="digital_marketing">Digital Marketing</string>
+    <string name="market_analyzer">Market Analyzer</string>
+    <string name="hr_manager">HR Manager</string>
+    <string name="social_media_marketing">Social Media Marketing</string>
+    <string name="video_editor">Video Editor</string>
+    <string name="bussiness_devlopment_and_research_development">Bussiness Devlopment and Research Development</string>
+    <string name="website_and_android_devlopment">Website and Android Devlopment</string>
+    <string name="_90_days">90 Days</string>
+    <string name="_60_days">60 Days</string>
+    <string name="_1_year">1 year</string>
+    <string name="_6_months">6 Months</string>
+    <string name="periods">Periods -</string>
+    <string name="how_you_have_got_to_know_about_this_internship">How you have got to know about this internship  -  </string>
+    <string name="do_you_have_any_experience">Do You have any Experience -</string>
+    <string name="why_should_we_hire_you">Why should we hire you  -  </string>
+    <string name="there_will_be_a_registration_fee_non_refundable">There will be a registration fee(non refundable) -</string>
+
+    <string name="dd_mm_yy">DD/MM/YY</string>
+    <string name="field_executive">Field Executive</string>
+    <string name="facebook">FaceBook</string>
+    <string name="instagram">Instagram</string>
+    <string name="linkdin">Linkdin</string>
+    <string name="twitter">Twitter</string>
+    <string name="website">Website</string>
+    <string name="friends">Friends</string>
+    <string name="other">Other</string>
+    <string name="todo">TODO</string>
+
+
 </resources>

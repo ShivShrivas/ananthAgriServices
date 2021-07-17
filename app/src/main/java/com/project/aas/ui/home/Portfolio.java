@@ -1,4 +1,4 @@
-package com.project.aas.ui.slideshow;
+package com.project.aas.ui.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,52 +6,40 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.project.aas.HomePage;
 import com.project.aas.R;
+import com.project.aas.ui.slideshow.Blogs;
 
-public class Blogs extends AppCompatActivity {
+public class Portfolio extends AppCompatActivity {
 
     WebView webView;
-    private String webUrl="https://aasblogs.in/";
+    private String webUrl="https://aboutaas.online/";
     ImageView back;
     TextView backt;
     ProgressDialog pd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_blogs);
+        setContentView(R.layout.activity_portfolio);
 
         webView= findViewById(R.id.myWebView);
         WebSettings webSettings=webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.setWebViewClient(new MyWebViewClient());
+        webView.setWebViewClient(new Portfolio.MyWebViewClient());
 
         webView.loadUrl(webUrl);
         back=findViewById(R.id.backk);
-        back.setOnClickListener(v -> startActivity(new Intent(Blogs.this, HomePage.class)));
+        back.setOnClickListener(v -> startActivity(new Intent(Portfolio.this, HomePage.class)));
         backt=findViewById(R.id.backkk);
-        backt.setOnClickListener(v -> startActivity(new Intent(Blogs.this, HomePage.class)));
+        backt.setOnClickListener(v -> startActivity(new Intent(Portfolio.this, HomePage.class)));
     }
-
-    @Override
-    public void onBackPressed() {
-        if(webView.canGoBack()){
-            webView.goBack();
-        }else
-            super.onBackPressed();
-    }
-
 
     private class MyWebViewClient extends WebViewClient {
 
@@ -64,7 +52,7 @@ public class Blogs extends AppCompatActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            pd = new ProgressDialog(Blogs.this);
+            pd = new ProgressDialog(Portfolio.this);
             pd.setMessage("Please wait ...");
             pd.show();
         }
@@ -77,4 +65,5 @@ public class Blogs extends AppCompatActivity {
             }
         }
     }
+
 }
