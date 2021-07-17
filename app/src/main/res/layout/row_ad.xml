@@ -1,102 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="180dp"
-    android:layout_height="240dp"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginVertical="6dp"
-    android:layout_marginHorizontal="8dp"
-    android:elevation="6dp">
+    android:id="@+id/row_layout"
+    android:layout_width="180dp"
+    android:layout_height="250dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/new_ad_drawable"
+    android:elevation="10dp"
+    android:padding="4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/row_layout"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_ad_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="100dp"
+        android:padding="6dp"
+        android:adjustViewBounds="true"
+        android:elevation="4dp"
+        android:scaleType="centerCrop"
+        app:shapeAppearance="@style/circleImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_launcher" />
 
-        <ImageView
-            android:id="@+id/iv_ad_image"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_margin="4dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@mipmap/ic_launcher" />
+    <TextView
+        android:id="@+id/tv_ad_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"
+        android:ellipsize="end"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:fontFamily="@font/poppins_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_ad_image"
+        tools:text="SAG Loory Transport" />
 
-        <TextView
-            android:id="@+id/tv_ad_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            tools:text="SAG Loory Transport"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_ad_image" />
+    <TextView
+        android:id="@+id/tv_date_posted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="4dp"
+        android:textSize="10sp"
+        android:fontFamily="@font/poppins"
+        app:drawableStartCompat="@drawable/ic_clock"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ad_title"
+        tools:text="11 hours ago" />
 
-        <TextView
-            android:id="@+id/tv_date_posted"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:drawablePadding="4dp"
-            tools:text="11 hours ago"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_ad_title"
-            app:drawableStartCompat="@drawable/ic_clock" />
+    <TextView
+        android:id="@+id/tv_posted_by"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="4dp"
+        android:textSize="10sp"
+        android:fontFamily="@font/poppins"
+        app:drawableStartCompat="@drawable/ic_person_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date_posted"
+        tools:text="Ananth agri services" />
 
-        <TextView
-            android:id="@+id/tv_posted_by"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:drawablePadding="4dp"
-            tools:text="Ananth agri services"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date_posted"
-            app:drawableStartCompat="@drawable/ic_person_outline" />
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="4dp"
+        android:textSize="10sp"
+        android:fontFamily="@font/poppins"
+        app:drawableStartCompat="@drawable/ic_baseline_location_on_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_posted_by"
+        tools:text="Ananth agri services" />
 
-        <TextView
-            android:id="@+id/tv_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:drawablePadding="4dp"
-            tools:text="Ananth agri services"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_posted_by"
-            app:drawableStartCompat="@drawable/ic_baseline_location_on_24" />
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/green"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:fontFamily="@font/poppins_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_location"
+        tools:text="₹10,000per day(Negotiable)" />
 
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:drawablePadding="4dp"
-            tools:text="₹10,000per day(Negotiable)"
-            android:textSize="12sp"
-            android:textColor="@color/green"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_location"
-            android:layout_marginBottom="8dp"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
