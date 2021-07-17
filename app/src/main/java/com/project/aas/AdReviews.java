@@ -1,25 +1,18 @@
 package com.project.aas;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 
-import com.project.aas.adapter.AdRecyclerViewAdapter;
 import com.project.aas.adapter.ReviewAdapter;
-import com.project.aas.databinding.ActivityAdDetailBinding;
 import com.project.aas.databinding.ActivityAdReviewsBinding;
-import com.project.aas.model.AdPost;
 import com.project.aas.model.AdReview;
 import com.project.aas.model.Review;
 
 import java.util.List;
-
-import iammert.com.expandablelib.ExpandCollapseListener;
-import iammert.com.expandablelib.ExpandableLayout;
 
 public class AdReviews extends AppCompatActivity {
 
