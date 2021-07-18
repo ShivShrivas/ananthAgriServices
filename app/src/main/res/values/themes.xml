@@ -22,4 +22,11 @@
     <style name="Theme.AAS.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.AAS.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="circleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8%</item>
+    </style>
+
+
 </resources>
