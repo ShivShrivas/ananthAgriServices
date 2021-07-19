@@ -45,7 +45,7 @@ public class AddAds extends AppCompatActivity {
     private AppCompatButton mSubmitBtn;
     private CheckBox mCheckBox;
     private Spinner mPriceType, mPriceUnit, mAdType,mCategory, mSubCategory;
-    private String title,price,pin,desc,address,phone,whatsapp,adType,adCategory,adSubCategory,videoUrl;
+    private String title,price,pin,desc,address,phone,whatsapp,adType,adCategory,adSubCategory,videoUrl,priceType,priceUnit;
     private String TAG = "AddAdsActivity";
     private FirebaseDatabase mDatabaseReference;
     private static int CHOOSE_IMAGE_CODE = 17;
@@ -98,7 +98,8 @@ public class AddAds extends AppCompatActivity {
 
         if(title.equals("") || price.equals("") || pin.equals("") || desc.equals("")
                 || address.equals("") || phone.equals("") || whatsapp.equals("")
-                || adCategory.equals("") || adType.equals("") || adSubCategory.equals("")) {
+                || adCategory.equals("") || adType.equals("") || adSubCategory.equals("")
+                || priceUnit.equals("") || priceType.equals("")) {
             Toast.makeText(this, "Fields marked with * are mandatory. Make sure to fill them.", Toast.LENGTH_SHORT).show();
         }else {
             if(mAdImageUrls.size() == 0) {
@@ -239,32 +240,11 @@ public class AddAds extends AppCompatActivity {
 
     }
 
-    private void initSpinners() {
-        String [] adTypes = {"Sell","Rent"};
-        String [] subCategoryTypes = {"Agri Labours","Agricultural implements","Agricultural machineries"};
-        String [] categoryTypes = {"Farming Machinery and Tools","Fertilizers and Chemicals","Seeds and Nursery","Other Products and Services"};
+    private void initAdTypeSpinner() {
+        String [] adTypes = {"Sell",
+                "Rent"};
         ArrayAdapter adTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, adTypes);
-        ArrayAdapter categoryTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, categoryTypes);
-        ArrayAdapter subCategoryTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, subCategoryTypes);
-
         adTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categoryTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        subCategoryTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        mCategory.setAdapter(categoryTypeAdapter);
-        mCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                adCategory = categoryTypes[position];
-                Log.i(TAG, "onItemSelected: Selecting" + adCategory);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(AddAds.this, "Mandatory Field.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         mAdType.setAdapter(adTypeAdapter);
         mAdType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -278,7 +258,47 @@ public class AddAds extends AppCompatActivity {
                 Toast.makeText(AddAds.this, "Mandatory Field.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void initCategorySpinner() {
+        String [] categoryTypes = {"Farm machinery and Tools",
+                "Fertilizers and chemicals",
+                "Seeds and Nursery",
+                "Other services"};
+
+        ArrayAdapter categoryTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, categoryTypes);
+        categoryTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mCategory.setAdapter(categoryTypeAdapter);
+        mCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                adCategory = categoryTypes[position];
+                Log.i(TAG, "onItemSelected: Selecting" + adCategory);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(AddAds.this, "Mandatory Field.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void initSubCategorySpinner() {
+        String [] subCategoryTypes = {"Agri labours",
+                "Tools and Implements",
+                "Agricultural Machineries",
+                "Borewells",
+                "Harvesters",
+                "JCB",
+                "Sprayers",
+                "Tractors",
+                "Transplanters",
+                "Water tankers",
+                "Transporting vehicles",
+                "Other services"};
+
+        ArrayAdapter subCategoryTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, subCategoryTypes);
+        subCategoryTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSubCategory.setAdapter(subCategoryTypeAdapter);
         mSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -292,6 +312,68 @@ public class AddAds extends AppCompatActivity {
                 Toast.makeText(AddAds.this, "Mandatory Field.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void initPriceTypeSpinner() {
+        String [] priceTypes = {"Fixed",
+                "Negotiable",
+                "On Call"
+        };
+        ArrayAdapter priceTypeAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, priceTypes);
+        priceTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mPriceType.setAdapter(priceTypeAdapter);
+        mPriceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                priceType = priceTypes[position];
+                Log.i(TAG, "onItemSelected: Selecting" + adType);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(AddAds.this, "Mandatory Field.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void initPriceUnitSpinner() {
+        String [] priceUnits = {"Per Hour",
+                "Per Day",
+                "Per Week",
+                "Per Month",
+                "Kilo meters (KM)","Acres",
+                "Hectares",
+                "Quintals",
+                "Tons",
+                "Bags",
+                "Kilograms (kg)",
+                "Litres",
+                "Tray",
+                "Grams"};
+
+        ArrayAdapter priceUnitAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, priceUnits);
+        priceUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mPriceUnit.setAdapter(priceUnitAdapter);
+        mPriceUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                priceUnit = priceUnits[position];
+                Log.i(TAG, "onItemSelected: Selecting" + priceUnit);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(AddAds.this, "Mandatory Field.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void initSpinners() {
+        initAdTypeSpinner();
+        initCategorySpinner();
+        initSubCategorySpinner();
+        initPriceTypeSpinner();
+        initPriceUnitSpinner();
     }
 
     private void uploadAd(AdPost ad) {
