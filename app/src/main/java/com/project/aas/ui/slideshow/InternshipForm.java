@@ -18,11 +18,8 @@ public class InternshipForm extends AppCompatActivity {
         setContentView(R.layout.activity_internship_form);
 
         submit=findViewById(R.id.submitInternshipForm);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
-            }
+        submit.setOnClickListener(v -> {
+
         });
     }
 }

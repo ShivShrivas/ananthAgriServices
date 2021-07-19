@@ -13,12 +13,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.AboutUs;
 import com.project.aas.HomePage;
 import com.project.aas.R;
 
@@ -34,59 +31,33 @@ public class ContactUs extends AppCompatActivity {
         setContentView(R.layout.activity_contact_us);
 
         chat=findViewById(R.id.chatwhat);
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialog();
-            }
-        });
+        chat.setOnClickListener(v -> openDialog());
 
         phone=findViewById(R.id.phonecall);
-        phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makePhoneCall();
-            }
-        });
+        phone.setOnClickListener(v -> makePhoneCall());
         copybuttonone=findViewById(R.id.copyone);
-        copybuttonone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("copybuttoneone", "9704218219");
-                clipboard.setPrimaryClip(clip);
-                clip.getDescription();
+        copybuttonone.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("copybuttoneone", "9704218219");
+            clipboard.setPrimaryClip(clip);
+            clip.getDescription();
 
-                Toast.makeText(ContactUs.this, "number copied to clipboard", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(ContactUs.this, "number copied to clipboard", Toast.LENGTH_SHORT).show();
         });
 
         back=findViewById(R.id.backk);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ContactUs.this, HomePage.class));
-            }
-        });
+        back.setOnClickListener(v -> startActivity(new Intent(ContactUs.this, HomePage.class)));
         backt=findViewById(R.id.backkk);
-        backt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ContactUs.this, HomePage.class));
-            }
-        });
+        backt.setOnClickListener(v -> startActivity(new Intent(ContactUs.this, HomePage.class)));
 
         copybuttontwo=findViewById(R.id.copytwo);
-        copybuttontwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("copybuttontwo", "ananthagriservices@gmail.com");
-                clipboard.setPrimaryClip(clip);
-                clip.getDescription();
+        copybuttontwo.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("copybuttontwo", "ananthagriservices@gmail.com");
+            clipboard.setPrimaryClip(clip);
+            clip.getDescription();
 
-                Toast.makeText(ContactUs.this, "number copied to clipboard", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(ContactUs.this, "number copied to clipboard", Toast.LENGTH_SHORT).show();
         });
     }
     public void makePhoneCall(){

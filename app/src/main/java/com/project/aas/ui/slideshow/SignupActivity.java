@@ -1,16 +1,13 @@
-package com.project.aas;
+package com.project.aas.ui.slideshow;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,13 +20,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.project.aas.ExampleDialog1;
+import com.project.aas.HomePage;
+import com.project.aas.R;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
-import java.util.Objects;
 
-public class SignupFragment extends Fragment {
+public class SignupActivity extends AppCompatActivity {
 
     private Button register;
     EditText name,mobile,email,password,password2;
@@ -37,36 +36,38 @@ public class SignupFragment extends Fragment {
     FirebaseAuth auth;
     DatabaseReference databaseReference;
     ProgressDialog pd;
+    TextView LoginUp,Loginbottom;
 
-
-
-    public static SignupFragment newInstance(String param1, String param2) {
-        SignupFragment fragment = new SignupFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_signup);
 
-    }
+        LoginUp=findViewById(R.id.logintitle2);
+        Loginbottom=findViewById(R.id.textView15);
+        Loginbottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignupActivity.this,LoginActivity.class));
+            }
+        });
+        LoginUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignupActivity.this,LoginActivity.class));
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_signup, container, false);
+            }
+        });
 
+        register=findViewById(R.id.register_user);
+        name=findViewById(R.id.editTextTextPersonName3);
+        //mobile=findViewById(R.id.mobile_signup);
+        email=findViewById(R.id.editTextTextPersonName4);
+        password=findViewById(R.id.editTextTextPersonName5);
+        password2=findViewById(R.id.editTextTextPersonName6);
+        terms=findViewById(R.id.textView14);
 
-        register=view.findViewById(R.id.register_user);
-        name=view.findViewById(R.id.name);
-        mobile=view.findViewById(R.id.mobile_signup);
-        email=view.findViewById(R.id.emailid_signup);
-        password=view.findViewById(R.id.password_signup);
-        password2=view.findViewById(R.id.password2);
-        terms=view.findViewById(R.id.terms);
         terms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,44 +80,43 @@ public class SignupFragment extends Fragment {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pd=new ProgressDialog(getContext());
+                pd=new ProgressDialog(SignupActivity.this);
                 pd.setMessage("Please Wait...");
                 pd.show();
 
                 String str_name=name.getText().toString();
-                String str_mobile=mobile.getText().toString();
                 String str_email=email.getText().toString();
                 String str_password=password.getText().toString();
                 String str_password2 = password2.getText().toString();
 
-                if(TextUtils.isEmpty(str_name)|| TextUtils.isEmpty(str_mobile)
+                if(TextUtils.isEmpty(str_name)
                         ||TextUtils.isEmpty(str_email)||TextUtils.isEmpty(str_password)
                         ||TextUtils.isEmpty(str_password2)){
-                    Toast.makeText(getContext(),"All fields are required",
+                    Toast.makeText(SignupActivity.this,"All fields are required",
                             Toast.LENGTH_SHORT).show();
                     pd.dismiss();
                 }else if(str_password.length()<6){
-                    Toast.makeText(getContext(),"password must be" +
+                    Toast.makeText(SignupActivity.this,"password must be" +
                                     " of minimum six characters",
                             Toast.LENGTH_SHORT).show();
-                    pd.dismiss();
                 }else if (!str_password.equals(str_password2)){
-                    Toast.makeText(getContext(),"password not matching",
+                    Toast.makeText(SignupActivity.this,"password not matching",
                             Toast.LENGTH_SHORT).show();
-                    pd.dismiss();
                 }else{
-                    register(str_name,str_mobile,str_email,str_password);
+                    register(str_name,str_email,str_password);
                 }
 
             }
         });
-        return view;
+
+
+
     }
 
-    private void register(final String usernameName,final String mobile,final String email,
+    private void register(final String usernameName,final String email,
                           final String password) {
         auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NotNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -130,7 +130,6 @@ public class SignupFragment extends Fragment {
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("name", name);
                             hashMap.put("userName", usernameName.toLowerCase());
-                            hashMap.put("mobile", mobile);
                             hashMap.put("email", email);
 
                             databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -138,7 +137,7 @@ public class SignupFragment extends Fragment {
                                 public void onComplete(@NonNull @NotNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         pd.dismiss();
-                                        Intent intent = new Intent(getContext(), HomePage.class);
+                                        Intent intent = new Intent(SignupActivity.this, HomePage.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                     }
@@ -146,16 +145,17 @@ public class SignupFragment extends Fragment {
                             });
                         } else {
                             pd.dismiss();
-                            Toast.makeText(getContext(), "You can't register with this phone number or password",
+                            Toast.makeText(SignupActivity.this, "You can't register with this phone number or password",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
-       }
+    }
 
     public void openDialog() {
         ExampleDialog1 exampleDialog = new ExampleDialog1();
-        exampleDialog.show(getParentFragmentManager(), "example dialog");
+        exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
+
 }

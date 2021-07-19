@@ -2,7 +2,6 @@ package com.project.aas;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -32,17 +31,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.project.aas.adapter.AdRecyclerViewAdapter;
 import com.project.aas.databinding.ActivityHomePageBinding;
-import com.project.aas.model.Ad;
 import com.project.aas.model.AdPost;
 import com.project.aas.model.UserProfile;
 import com.project.aas.ui.AddAds;
@@ -53,7 +49,6 @@ import com.project.aas.ui.slideshow.Feedback;
 import com.project.aas.ui.slideshow.InternshipForm;
 import com.project.aas.ui.slideshow.MyOrders;
 import com.project.aas.ui.slideshow.Notifications;
-import com.project.aas.ui.slideshow.PhoneNumber;
 import com.project.aas.ui.slideshow.SavedAds;
 import com.project.aas.ui.slideshow.Settings;
 
@@ -79,15 +74,13 @@ import java.util.Locale;
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
-    private DrawerLayout drawerLayout;
     ImageView notifications;
     FusedLocationProviderClient fusedLocationProviderClient;
     TextView locationn;
-    NavigationView navigationView;
-    private int PERMISSION_ID = 44; 
+    private final int PERMISSION_ID = 44;
     FloatingActionButton floatingActionButton;
     List<AdPost> adsList;
-    private String TAG = "HomePage";
+    private final String TAG = "HomePage";
     RecyclerView adsRecyclerView;
     private FirebaseDatabase mDatabaseReference;
 
@@ -104,29 +97,22 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         adsList = new ArrayList();
         mDatabaseReference = FirebaseDatabase.getInstance();
 
+        FirebaseMessaging.getInstance().subscribeToTopic("notification");
 
         setSupportActionBar(binding.appBarHomePage.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
         floatingActionButton = findViewById(R.id.add_ads);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomePage.this, AddAds.class);
-                startActivity(intent);
-            }
+        floatingActionButton.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePage.this, AddAds.class);
+            startActivity(intent);
         });
 
         initRecyclerView();
 
         notifications=findViewById(R.id.notifications);
-        notifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomePage.this, Notifications.class));
-            }
-        });
+        notifications.setOnClickListener(v -> startActivity(new Intent(HomePage.this, Notifications.class)));
 
         locationn = findViewById(R.id.location);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -144,38 +130,35 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         bottomNavigationView = findViewById(R.id.bottomView);
         bottomNavigationView.setBackground(null);
         bottomNavigationView.getMenu().getItem(2).setEnabled(false);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                final int id = item.getItemId();
-                /*     case R.id.edit_profilebo:
-                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                        if(currentUser==null){
-                            Toast.makeText(getApplicationContext(),"You need to Login first.",Toast.LENGTH_SHORT).show();
-                            Bundle bundle = new Bundle();
-                            bundle.putBoolean("showSignUpPage",true);
-                            Intent intent = new Intent(HomePage.this, MainActivity.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            final int id = item.getItemId();
+            /*     case R.id.edit_profilebo:
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    if(currentUser==null){
+                        Toast.makeText(getApplicationContext(),"You need to Login first.",Toast.LENGTH_SHORT).show();
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("showSignUpPage",true);
+                        Intent intent = new Intent(HomePage.this, MainActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
 
-                       // }else {
-                         //   startActivity(new Intent(HomePage.this, EditProfile.class));
-                        }
-                        break;*/
-                    if(id==R.id.orders) {
-                        startActivity(new Intent(HomePage.this,MyOrders.class));
-                }
-                    if(id==R.id.edit_profilebo){
-                        startActivity(new Intent(HomePage.this, EditProfile.class));
+                   // }else {
+                     //   startActivity(new Intent(HomePage.this, EditProfile.class));
                     }
-                    if(id==R.id.homePage){
-                        startActivity(new Intent(HomePage.this,HomePage.class));
-                    }
-                    if(id==R.id.savedAds){
-                        startActivity(new Intent(HomePage.this, SavedAds.class));
-                    }
-                return false;
+                    break;*/
+                if(id==R.id.orders) {
+                    startActivity(new Intent(HomePage.this,MyOrders.class));
             }
+                if(id==R.id.edit_profilebo){
+                    startActivity(new Intent(HomePage.this, EditProfile.class));
+                }
+                if(id==R.id.homePage){
+                    startActivity(new Intent(HomePage.this,HomePage.class));
+                }
+                if(id==R.id.savedAds){
+                    startActivity(new Intent(HomePage.this, SavedAds.class));
+                }
+            return false;
         });
 
         final ImageSlider imageSlider = findViewById(R.id.flipper);
@@ -200,15 +183,12 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Log.i(TAG, "onDataChange: Found ad with id : "+snapshot.getKey());
                 AdPost ad = snapshot.getValue(AdPost.class);
-                mDatabaseReference.getReference("Users").child(ad.getPostedBy()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if(task.isSuccessful()) {
-                            UserProfile user = task.getResult().getValue(UserProfile.class);
-                            // ad.setPostedBy(user.getName());
-                            adsList.add(ad);
-                            adsRecyclerView.getAdapter().notifyDataSetChanged();
-                        }
+                mDatabaseReference.getReference("Users").child(ad.getPostedBy()).get().addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        UserProfile user = task.getResult().getValue(UserProfile.class);
+                        // ad.setPostedBy(user.getName());
+                        adsList.add(ad);
+                        adsRecyclerView.getAdapter().notifyDataSetChanged();
                     }
                 });
 
@@ -326,24 +306,21 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             if(isLocationEnabled()) {
                 Log.i(TAG, "getLocation: Location Enabled");
                 fusedLocationProviderClient.getLastLocation()
-                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                if (location != null) {
-                                    Geocoder geocoder = new Geocoder(HomePage.this, Locale.getDefault());
-                                    try {
-                                        List<Address> addresses = geocoder.getFromLocation(
-                                                location.getLatitude(), location.getLongitude(), 1
-                                        );
-                                        Log.i(TAG, "onSuccess: Found Location");
-                                        locationn.setText(Html.fromHtml(
-                                                "<font color='#6200EE'><b>Locality : </b><br></font>"+
-                                                        addresses.get(0).getLocality()
-                                        ));
+                        .addOnSuccessListener(this, location -> {
+                            if (location != null) {
+                                Geocoder geocoder = new Geocoder(HomePage.this, Locale.getDefault());
+                                try {
+                                    List<Address> addresses = geocoder.getFromLocation(
+                                            location.getLatitude(), location.getLongitude(), 1
+                                    );
+                                    Log.i(TAG, "onSuccess: Found Location");
+                                    locationn.setText(Html.fromHtml(
+                                            "<font color='#6200EE'><b>Locality : </b><br></font>"+
+                                                    addresses.get(0).getLocality()
+                                    ));
 
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
                             }
                         });

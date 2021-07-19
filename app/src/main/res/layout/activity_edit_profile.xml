@@ -42,18 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_edit_profile" />
 
-    <ImageButton
-        android:id="@+id/btn_upload_image"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/ring_shape"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/icon_camera"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_display_picture"
-        app:layout_constraintEnd_toEndOf="@+id/iv_display_picture"
-        app:layout_constraintHorizontal_bias="0.585"
-        app:layout_constraintStart_toStartOf="@+id/iv_display_picture" />
 
     <EditText
         android:id="@+id/et_name"

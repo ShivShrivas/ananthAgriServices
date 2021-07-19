@@ -21,19 +21,13 @@ public class ExampleDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
         builder.setTitle("LOG OUT!")
                 .setMessage("Are you sure you want to log out of this account?")
-                .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                       // startActivity(new Intent(getContext(),HomePage.class));
-                    }
+                .setNegativeButton("no", (dialog, which) -> {
+                    dialog.dismiss();
+                   // startActivity(new Intent(getContext(),HomePage.class));
                 })
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(getContext(), PhoneNumber.class));
-                    }
+                .setPositiveButton("Yes", (dialogInterface, i) -> {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(getContext(), PhoneNumber.class));
                 });
 
         return  builder.create();

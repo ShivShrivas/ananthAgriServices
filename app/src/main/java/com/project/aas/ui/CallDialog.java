@@ -2,7 +2,7 @@ package com.project.aas.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,9 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.project.aas.MainActivity;
 
 public class CallDialog extends AppCompatDialogFragment{
 
@@ -34,20 +31,12 @@ public class CallDialog extends AppCompatDialogFragment{
 
         builder.setTitle("Call " + phone)
                 .setMessage("Are you sure to call this number?")
-                .setPositiveButton("Call", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton("Call", (dialog, which) -> {
 
-                        startActivity(callIntent);
-                        dialog.dismiss();
-                    }
+                    startActivity(callIntent);
+                    dialog.dismiss();
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         return builder.create();
     }

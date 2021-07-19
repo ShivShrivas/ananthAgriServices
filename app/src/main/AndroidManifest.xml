@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AAS">
-        <activity android:name=".ui.home.Portfolio"></activity>
+        <activity android:name=".ui.slideshow.SignupActivity"></activity>
+        <activity android:name=".ui.slideshow.LoginActivity" />
+        <activity android:name=".ui.home.Portfolio" />
         <activity android:name=".ui.slideshow.InternshipForm" />
         <activity android:name=".ui.slideshow.OtpVerification" />
         <activity android:name=".ui.slideshow.SavedAds" />
@@ -43,6 +46,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".getStarted">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="preloaded_fonts"

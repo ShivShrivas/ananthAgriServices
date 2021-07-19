@@ -2,15 +2,11 @@ package com.project.aas;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 public class PrivacyDialog extends AppCompatDialogFragment {
     @NonNull
@@ -102,12 +98,9 @@ public class PrivacyDialog extends AppCompatDialogFragment {
                         "Contact Us\n" +
                         "\n" +
                         "If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at info@ananthagriservices.in")
-                .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        // startActivity(new Intent(getContext(),HomePage.class));
-                    }
+                .setNegativeButton("Ok", (dialog, which) -> {
+                    dialog.dismiss();
+                    // startActivity(new Intent(getContext(),HomePage.class));
                 });
         return  builder.create();
     }

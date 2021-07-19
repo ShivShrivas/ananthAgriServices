@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.internal.Storage;
@@ -38,16 +39,27 @@ import org.jetbrains.annotations.Nullable;
 public class EditProfile extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
+    private static final int REQUEST_CODE=1;
     ImageButton back;
+    Uri imageUri;
     private static int CHOOSE_IMAGE_CODE = 11;
     private String TAG = "EditProfileActivity";
     private ProgressDialog pd;
+    ImageView imageView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        imageView= findViewById(R.id.iv_display_picture);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openImagefrom();
+            }
+        });
 
         back=findViewById(R.id.btn_back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -132,15 +144,16 @@ public class EditProfile extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
-            if(requestCode == CHOOSE_IMAGE_CODE) {
-                // Image successfully selected for uploading
-                String uri = data.getData().toString();
-                Log.i(TAG, "onActivityResult: "+uri);
-                pd.show();
-                uploadProfilePicture(uri);
-            }
+        if(requestCode==REQUEST_CODE && resultCode==RESULT_OK && data !=null &&data.getData()!=null){
+            imageUri=data.getData();
+            imageView.setImageURI(imageUri);
         }
+    }
+    private void openImagefrom() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,REQUEST_CODE);
     }
 
 

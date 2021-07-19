@@ -22,18 +22,8 @@ public class Notifications extends AppCompatActivity {
         setContentView(R.layout.activity_notifications);
 
         backt = findViewById(R.id.backkk);
-        backt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Notifications.this, HomePage.class));
-            }
-        });
+        backt.setOnClickListener(v -> startActivity(new Intent(Notifications.this, HomePage.class)));
         back = findViewById(R.id.backk);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Notifications.this, HomePage.class));
-            }
-        });
+        back.setOnClickListener(v -> startActivity(new Intent(Notifications.this, HomePage.class)));
     }
 }

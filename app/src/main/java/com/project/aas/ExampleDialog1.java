@@ -2,9 +2,6 @@ package com.project.aas;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -71,12 +68,7 @@ public class ExampleDialog1 extends AppCompatDialogFragment {
                         "Contact Us\n" +
                         "\n" +
                         "If you have any questions or suggestions about our Terms and Conditions, do not hesitate to contact us at info@ananthagriservices.in ")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
+                .setPositiveButton("Ok", (dialogInterface, i) -> dialogInterface.dismiss());
 
         return  builder.create();
     }
