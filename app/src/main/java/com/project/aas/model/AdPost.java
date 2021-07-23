@@ -1,5 +1,7 @@
 package com.project.aas.model;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class AdPost implements Serializable {
     }
 
     public String getId() {
-        return id;
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     public void setId(String id) {

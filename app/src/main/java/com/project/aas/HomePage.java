@@ -31,6 +31,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -74,7 +76,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     BottomNavigationView bottomNavigationView;
     private DrawerLayout drawerLayout;
-    ImageView notifications;
+    ImageView notifications,profilePhoto;
     FusedLocationProviderClient fusedLocationProviderClient;
     TextView locationn;
     NavigationView navigationView;
@@ -84,6 +86,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private String TAG = "HomePage";
     RecyclerView adsRecyclerView;
     private FirebaseDatabase mDatabaseReference;
+    DatabaseReference mUserRef;
+    FirebaseAuth mAuth;
+    FirebaseUser mUser;
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomePageBinding binding;
@@ -98,6 +103,11 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         adsList = new ArrayList();
         mDatabaseReference = FirebaseDatabase.getInstance();
 
+        mAuth=FirebaseAuth.getInstance();
+        mUser=mAuth.getCurrentUser();
+        mUserRef=FirebaseDatabase.getInstance().getReference("Users");
+
+        profilePhoto=findViewById(R.id.profileNavigationImage);
 
         setSupportActionBar(binding.appBarHomePage.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
@@ -160,7 +170,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                         startActivity(new Intent(HomePage.this,MyOrders.class));
                 }
                     if(id==R.id.edit_profilebo){
-                        startActivity(new Intent(HomePage.this, EditProfile.class));
+                       // startActivity(new Intent(HomePage.this, EditProfile.class));
                     }
                     if(id==R.id.homePage){
                         startActivity(new Intent(HomePage.this,HomePage.class));

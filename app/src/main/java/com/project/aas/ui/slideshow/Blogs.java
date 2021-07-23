@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
@@ -55,6 +56,8 @@ public class Blogs extends AppCompatActivity {
 
     private class MyWebViewClient extends WebViewClient {
 
+
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
@@ -77,4 +80,6 @@ public class Blogs extends AppCompatActivity {
             }
         }
     }
+
+
 }

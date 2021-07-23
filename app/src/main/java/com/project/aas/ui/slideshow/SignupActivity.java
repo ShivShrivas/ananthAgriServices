@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,12 +38,17 @@ public class SignupActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     ProgressDialog pd;
     TextView LoginUp,Loginbottom;
+    CheckBox individual,Dealer,termscheckbox;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        individual=findViewById(R.id.individual);
+        Dealer=findViewById(R.id.Dealer);
+        termscheckbox=findViewById(R.id.checkBox);
 
         LoginUp=findViewById(R.id.logintitle2);
         Loginbottom=findViewById(R.id.textView15);
@@ -81,7 +87,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pd=new ProgressDialog(SignupActivity.this);
-                pd.setMessage("Please Wait...");
+                pd.setMessage("Please Wait... \n" +"It may take a while");
                 pd.show();
 
                 String str_name=name.getText().toString();
@@ -99,18 +105,24 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this,"password must be" +
                                     " of minimum six characters",
                             Toast.LENGTH_SHORT).show();
-                }else if (!str_password.equals(str_password2)){
-                    Toast.makeText(SignupActivity.this,"password not matching",
+                    pd.dismiss();
+                }else if (!str_password.equals(str_password2)) {
+                    Toast.makeText(SignupActivity.this, "password not matching",
                             Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
+                }else if(!individual.isChecked()&&!Dealer.isChecked()){
+                    Toast.makeText(SignupActivity.this, "please tell us if you are a dealer or an individual",
+                            Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
+                }else if(!termscheckbox.isChecked()){
+                    Toast.makeText(SignupActivity.this, "please Accept the terms of Service",
+                            Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
                 }else{
                     register(str_name,str_email,str_password);
                 }
-
             }
         });
-
-
-
     }
 
     private void register(final String usernameName,final String email,
@@ -125,7 +137,7 @@ public class SignupActivity extends AppCompatActivity {
                             String name = firebaseUser.getUid();
 
                             databaseReference = FirebaseDatabase.getInstance()
-                                    .getReference().child("Users").child("name");
+                                    .getReference().child("Users").child(name);
 
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("name", name);
@@ -137,15 +149,22 @@ public class SignupActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull @NotNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         pd.dismiss();
-                                        Intent intent = new Intent(SignupActivity.this, HomePage.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
+                                        if(individual.isChecked()){
+                                            Intent intent = new Intent(SignupActivity.this, UserDetailsIndividual.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                        }else if(Dealer.isChecked()){
+                                            Intent intent = new Intent(SignupActivity.this, UserDetailsActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                        }
+
                                     }
                                 }
                             });
                         } else {
                             pd.dismiss();
-                            Toast.makeText(SignupActivity.this, "You can't register with this phone number or password",
+                            Toast.makeText(SignupActivity.this, "You can't register with this email or password",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -155,7 +155,6 @@ public class AddAds extends AppCompatActivity {
                         Uri downloadUri = task.getResult();
                         mAdImageUrls.add(downloadUri.toString());
                         Log.i(TAG, "onComplete: Uploaded successfully! Ad uri -> "+ downloadUri );
-
                     } else {
                         Log.i(TAG, "onComplete: Encountered an error : "+task.getException().toString());
                     }

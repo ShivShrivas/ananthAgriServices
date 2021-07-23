@@ -14,64 +14,65 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.denzcoskun.imageslider.transformation.RoundedTransformation;
 import com.project.aas.AdDetail;
 import com.project.aas.R;
 import com.project.aas.model.AdPost;
+import com.project.aas.ui.slideshow.MyOrders;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class AdRecyclerViewAdapter extends RecyclerView.Adapter<AdRecyclerViewAdapter.ViewHolder>{
+public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHolder>{
 
-    private final List<AdPost> mAdsList;
+    private final List<AdPost> myAdsList;
     private final Context mContext;
     private static String TAG = "AdRecyclerViewAdapter";
 
-    public AdRecyclerViewAdapter(List<AdPost> mAdsList, Context context) {
-        this.mAdsList = mAdsList;
+    public MyPostsAdapter(List<AdPost> mAdsList, Context context) {
+        this.myAdsList = mAdsList;
         this.mContext = context;
     }
-
     @NonNull
     @Override
-    public AdRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyPostsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_ad,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+
+
         Glide.with(mContext)
-                .load(mAdsList.get(position).getImageUrls().get(0))
+                .load(myAdsList.get(position).getImageUrls().get(0))
                 .placeholder(R.drawable.ic_baseline_broken_image_24)
                 .into(holder.img);
 
         Log.i(TAG, "onBindViewHolder: Loaded Image #"+position);
 
-
-        holder.title.setText(mAdsList.get(position).getTitle());
-        holder.location.setText(mAdsList.get(position).getLocation());
-        holder.postedBy.setText(mAdsList.get(position).getPostedBy());
-        holder.datePosted.setText("Posted On "+mAdsList.get(position).getDatePosted());
-        holder.price.setText("Rs. " + mAdsList.get(position).getPrice());
+        holder.title.setText(myAdsList.get(position).getTitle());
+        holder.location.setText(myAdsList.get(position).getLocation());
+        holder.postedBy.setText(myAdsList.get(position).getPostedBy());
+        holder.datePosted.setText("Posted On "+myAdsList.get(position).getDatePosted());
+        holder.price.setText("Rs. " + myAdsList.get(position).getPrice());
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AdDetail.class);
-                intent.putExtra("AdObject",mAdsList.get(position));
+                intent.putExtra("AdObject",myAdsList.get(position));
                 mContext.startActivity(intent);
             }
         });
-    }
 
+    }
     @Override
     public int getItemCount() {
-        Log.i(TAG, "getItemCount: "+ mAdsList.size());
-        return mAdsList.size();
+        return myAdsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView img;
         ConstraintLayout layout;
         TextView title,postedBy,datePosted,location,price;

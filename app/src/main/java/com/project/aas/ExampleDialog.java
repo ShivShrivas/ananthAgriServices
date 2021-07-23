@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.project.aas.ui.slideshow.LoginActivity;
 import com.project.aas.ui.slideshow.PhoneNumber;
 
 public class ExampleDialog extends AppCompatDialogFragment {
@@ -27,7 +28,7 @@ public class ExampleDialog extends AppCompatDialogFragment {
                 })
                 .setPositiveButton("Yes", (dialogInterface, i) -> {
                     FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(getContext(), PhoneNumber.class));
+                    startActivity(new Intent(getContext(), LoginActivity.class));
                 });
 
         return  builder.create();

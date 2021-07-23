@@ -35,7 +35,6 @@ public class AddPhoto extends AppCompatActivity {
     final int REQUEST_CODE=999;
     Uri imageData;
     Button skip,save;
-    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
