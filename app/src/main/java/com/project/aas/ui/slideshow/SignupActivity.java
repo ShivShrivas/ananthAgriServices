@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +34,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private Button register;
     EditText name,mobile,email,password,password2;
+    TextInputEditText password1,password0;
     TextView terms;
     FirebaseAuth auth;
     DatabaseReference databaseReference;
@@ -49,6 +51,9 @@ public class SignupActivity extends AppCompatActivity {
         individual=findViewById(R.id.individual);
         Dealer=findViewById(R.id.Dealer);
         termscheckbox=findViewById(R.id.checkBox);
+
+        password1=findViewById(R.id.editTextTextPersonName5);
+        password0=findViewById(R.id.editTextTextPersonName6);
 
         LoginUp=findViewById(R.id.logintitle2);
         Loginbottom=findViewById(R.id.textView15);
@@ -70,8 +75,6 @@ public class SignupActivity extends AppCompatActivity {
         name=findViewById(R.id.editTextTextPersonName3);
         //mobile=findViewById(R.id.mobile_signup);
         email=findViewById(R.id.editTextTextPersonName4);
-        password=findViewById(R.id.editTextTextPersonName5);
-        password2=findViewById(R.id.editTextTextPersonName6);
         terms=findViewById(R.id.textView14);
 
         terms.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +95,8 @@ public class SignupActivity extends AppCompatActivity {
 
                 String str_name=name.getText().toString();
                 String str_email=email.getText().toString();
-                String str_password=password.getText().toString();
-                String str_password2 = password2.getText().toString();
+                String str_password=password1.getText().toString();
+                String str_password2 = password0.getText().toString();
 
                 if(TextUtils.isEmpty(str_name)
                         ||TextUtils.isEmpty(str_email)||TextUtils.isEmpty(str_password)

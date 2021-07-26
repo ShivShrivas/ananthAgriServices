@@ -14,7 +14,7 @@
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="252dp"
+            android:layout_marginTop="259dp"
             android:text="Confirm Password "
             android:textColor="#0C0C0C"
             android:textSize="16sp"
@@ -23,18 +23,29 @@
             app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
-        <EditText
-            android:id="@+id/editTextTextPersonName6"
-            android:layout_width="344dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="236dp"
-            android:ems="10"
-            android:hint="re-enter your password"
-            android:inputType="textPersonName"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ccc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#EAE4E4"
+            app:passwordToggleEnabled="true"
+            android:hint="Enter your password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.432"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            android:layout_marginTop="249dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTextPersonName6"
+                android:layout_width="338dp"
+                android:layout_height="match_parent"
+                android:background="#FAF9F9"
+                android:ems="15"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <CheckBox
             android:id="@+id/individual"
@@ -45,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.106"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6" />
+            app:layout_constraintTop_toBottomOf="@+id/ccc" />
         <CheckBox
             android:id="@+id/Dealer"
             android:layout_width="wrap_content"
@@ -70,18 +81,29 @@
             app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
-        <EditText
-            android:id="@+id/editTextTextPersonName5"
-            android:layout_width="344dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="160dp"
-            android:ems="10"
-            android:hint="enter your Password"
-            android:inputType="textPersonName"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bbb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#EAE4E4"
+            app:passwordToggleEnabled="true"
+            android:hint="Enter your password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.462"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            android:layout_marginTop="160dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTextPersonName5"
+                android:layout_width="338dp"
+                android:layout_height="match_parent"
+                android:background="#FAF9F9"
+                android:ems="15"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/button2"
             android:layout_width="171dp"
@@ -225,30 +247,6 @@
             app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="52dp"
-            android:layout_marginRight="52dp"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.993"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName5"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName5"
-            app:layout_constraintVertical_bias="0.318"
-            app:srcCompat="@drawable/eyeicon" />
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/checkBox"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName6"
-            app:layout_constraintHorizontal_bias="0.95"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName6"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName6"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/eyeicon" />
 
         <LinearLayout
             android:id="@+id/ll1"

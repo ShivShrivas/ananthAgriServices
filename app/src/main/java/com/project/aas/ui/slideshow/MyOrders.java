@@ -1,7 +1,7 @@
 package com.project.aas.ui.slideshow;
 
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +28,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.aas.HomePage;
 import com.project.aas.R;
+import com.project.aas.adapter.AdRecyclerViewAdapter;
 import com.project.aas.adapter.MyPostsAdapter;
 import com.project.aas.model.AdPost;
+import com.project.aas.model.MyAdsPost;
+import com.project.aas.model.UserProfile;
 import com.project.aas.ui.EditProfile;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,6 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MyOrders extends AppCompatActivity {
 
@@ -43,7 +50,9 @@ public class MyOrders extends AppCompatActivity {
 
     RecyclerView recyclerView;
     MyPostsAdapter myPostsAdapter;
-    List<AdPost> MyAdsList;
+    List<MyAdsPost> MyAdsList;
+    String fUser;
+    FirebaseDatabase databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +63,9 @@ public class MyOrders extends AppCompatActivity {
         backk=findViewById(R.id.backkk);
         backk.setOnClickListener(v -> startActivity(new Intent(MyOrders.this, HomePage.class)));
 
-        recyclerView=findViewById(R.id.myAdsRecycler);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager adsLayoutManager = new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(adsLayoutManager);
-        recyclerView.setNestedScrollingEnabled(false);
-        MyAdsList = new ArrayList<>();
-        myPostsAdapter = new MyPostsAdapter(MyAdsList,this);
-        recyclerView.setAdapter(myPostsAdapter);
-        myAds();
+       recyclerview();
+
+       fUser= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         bottomNavigationView=findViewById(R.id.bottomView);
         bottomNavigationView.setBackground(null);
@@ -83,21 +86,55 @@ public class MyOrders extends AppCompatActivity {
         });
     }
 
+    private void recyclerview() {
+        recyclerView = findViewById(R.id.myAdsRecycler);
+        RecyclerView.LayoutManager myAdsLayoutManager = new GridLayoutManager(this,2);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setLayoutManager(myAdsLayoutManager);
+        MyPostsAdapter adapter=new MyPostsAdapter(MyAdsList,this);
+        recyclerView.setAdapter(adapter);
+        myAds();
+    }
+
     private void myAds(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Ads");
-        reference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                MyAdsList.clear();
-                for(DataSnapshot snapshot1:snapshot.getChildren()){
-                    AdPost adPost = snapshot1.getValue(AdPost.class);
-                    if(adPost.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                        MyAdsList.add(adPost);
-                    }
-                    Collections.reverse(MyAdsList);
-                    myPostsAdapter.notifyDataSetChanged();
-                }
+            public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                MyAdsPost myAds = snapshot.getValue(MyAdsPost.class);
+                assert myAds != null;
+                databaseReference.getReference("Ads").child(myAds.getPostedBy()).get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    if (myAds.getId().equals(fUser)) {
+                                        MyAdsList.add(myAds);
+                                    }
+                                    Collections.reverse(MyAdsList);
+                                    myPostsAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
             }
+
+            @Override
+            public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+
+            }
+
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 

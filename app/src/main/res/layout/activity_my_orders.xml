@@ -36,28 +36,14 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:gravity="center_horizontal">
-        <ImageView
-            android:id="@+id/imagorder"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/order"/>
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/myAdsRecycler"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="60dp"
+    android:layout_marginBottom="60dp"/>
 
-    </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No Ads Posted "
-            android:gravity="center_horizontal"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:layout_marginTop="370dp"
-            />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"

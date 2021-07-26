@@ -38,11 +38,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.aas.adapter.AdRecyclerViewAdapter;
 import com.project.aas.databinding.ActivityHomePageBinding;
 import com.project.aas.model.AdPost;
 import com.project.aas.model.UserProfile;
 import com.project.aas.ui.AddAds;
+import com.project.aas.ui.EditProfile;
 import com.project.aas.ui.slideshow.Blogs;
 import com.project.aas.ui.slideshow.ContactUs;
 import com.project.aas.ui.slideshow.Feedback;
@@ -76,9 +78,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     BottomNavigationView bottomNavigationView;
     private DrawerLayout drawerLayout;
-    ImageView notifications,profilePhoto;
+    ImageView notifications,profilePhoto,email;
     FusedLocationProviderClient fusedLocationProviderClient;
-    TextView locationn;
+    TextView locationn,name;
     NavigationView navigationView;
     private int PERMISSION_ID = 44; 
     FloatingActionButton floatingActionButton;
@@ -108,6 +110,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         mUserRef=FirebaseDatabase.getInstance().getReference("Users");
 
         profilePhoto=findViewById(R.id.profileNavigationImage);
+        name=findViewById(R.id.aa);
 
         setSupportActionBar(binding.appBarHomePage.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
@@ -170,7 +173,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                         startActivity(new Intent(HomePage.this,MyOrders.class));
                 }
                     if(id==R.id.edit_profilebo){
-                       // startActivity(new Intent(HomePage.this, EditProfile.class));
+                        startActivity(new Intent(HomePage.this, EditProfile.class));
                     }
                     if(id==R.id.homePage){
                         startActivity(new Intent(HomePage.this,HomePage.class));
@@ -209,7 +212,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if(task.isSuccessful()) {
                             UserProfile user = task.getResult().getValue(UserProfile.class);
-                            // ad.setPostedBy(user.getName());
+                            //ad.setPostedBy(user.getName());
                             adsList.add(ad);
                             adsRecyclerView.getAdapter().notifyDataSetChanged();
                         }
@@ -381,4 +384,5 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         assert locationManager != null;
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
 }

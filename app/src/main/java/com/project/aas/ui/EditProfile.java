@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.internal.Storage;
@@ -25,6 +26,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -36,6 +40,8 @@ import com.project.aas.ui.slideshow.SavedAds;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+
 public class EditProfile extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
@@ -46,7 +52,8 @@ public class EditProfile extends AppCompatActivity {
     private String TAG = "EditProfileActivity";
     private ProgressDialog pd;
     ImageView imageView;
-
+    Button save;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +75,42 @@ public class EditProfile extends AppCompatActivity {
                 startActivity(new Intent(EditProfile.this,HomePage.class));
             }
         });
+        TextView uname=findViewById(R.id.et_name);
+        TextView description=findViewById(R.id.et_description);
+        TextView phone=findViewById(R.id.et_phone);
+        TextView mail=findViewById(R.id.et_email);
 
+        save=findViewById(R.id.btn_save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                pd=new ProgressDialog(getApplicationContext());
+//                pd.setMessage("Please Wait...");
+//                pd.show();
+                //
+                //FirebaseUser firebaseUser = auth.getCurrentUser();
+                String str_name=uname.getText().toString();
+                String str_desc=description.getText().toString();
+                String str_phone=phone.getText().toString();
+                String str_email=mail.getText().toString();
+                String name=FirebaseAuth.getInstance().getUid();
+                DatabaseReference databaseReference= FirebaseDatabase.getInstance()
+                        .getReference().child("Users").child(name);
+                //String postDetails = databaseReference.push().getKey();
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("name", str_name);
+//                //hashMap.put("userName", usernameName.toLowerCase());
+                hashMap.put("userName",str_phone);
+                //hashMap.put("",str_desc);
+                hashMap.put("email", str_email);
+                databaseReference.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        startActivity(new Intent(EditProfile.this,HomePage.class));
+                    }
+                });
+            }
+        });
         pd = new ProgressDialog(this);
         pd.setMessage("Please Wait...");
 
@@ -155,6 +197,4 @@ public class EditProfile extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,REQUEST_CODE);
     }
-
-
 }

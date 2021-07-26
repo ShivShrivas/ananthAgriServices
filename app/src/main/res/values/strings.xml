@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AAS</string>
+    <string name="app_name">Farm Easy</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_home_page">HomePage</string>
@@ -85,6 +85,9 @@
     <string name="friends">Friends</string>
     <string name="other">Other</string>
     <string name="todo">TODO</string>
+    <string name="go_to_home_page_click_on_the_plus_button_is_the_bottom_then_upload_required_pictures_and_fill_in_the_detail_and_your_ad_will_be_posted">Go to Home Page .Click on the plus button is the bottom . Then upload required pictures and fill in the detail and your ad will be posted</string>
+    <string name="faq2">Click on any ad you are interested in . then you will see the buy now button in the bottom . Click on that and you will be redirected to payments page . Complete the payment steps with your wallet or debit/credit cards and your oder will be placed .</string>
+    <string name="faq3">In case any amount is deducted from your account when you are buying subscription that amount will be refunded in 3 to 4 business days if subscription is not added to your account .</string>
 
 
 </resources>

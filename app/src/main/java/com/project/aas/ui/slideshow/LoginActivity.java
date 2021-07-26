@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button login;
     EditText mobile,password;
+    TextInputEditText passwordI;
     FirebaseAuth auth;
     TextView forgotPassword,signuptop,signupbottom;
 
@@ -56,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mobile=findViewById(R.id.editTextTextPersonName);
-        password=findViewById(R.id.editTextTextPersonName2);
+        passwordI=findViewById(R.id.editTextTextPersonName2);
         forgotPassword=findViewById(R.id.textView7);
 
         login=findViewById(R.id.button3);
@@ -66,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             pd.show();
 
             String str_mobile=mobile.getText().toString();
-            String str_password= password.getText().toString();
+            String str_password= passwordI.getText().toString();
             if(TextUtils.isEmpty(str_mobile)||TextUtils.isEmpty(str_password)){
                 Toast.makeText(LoginActivity.this,"All fields are required",
                         Toast.LENGTH_SHORT).show();

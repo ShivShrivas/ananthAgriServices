@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AAS">
-        <activity android:name=".ui.slideshow.UserDetailsIndividual"></activity>
+        <activity android:name=".ui.home.Faq"></activity>
+        <activity android:name=".ui.slideshow.UserDetailsIndividual" />
         <activity android:name=".AdReviews" />
         <activity android:name=".ui.home.Portfolio" />
         <activity android:name=".ui.slideshow.InternshipForm" />

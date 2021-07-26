@@ -67,7 +67,6 @@ public class AdRecyclerViewAdapter extends RecyclerView.Adapter<AdRecyclerViewAd
 
     @Override
     public int getItemCount() {
-        Log.i(TAG, "getItemCount: "+ mAdsList.size());
         return mAdsList.size();
     }
 

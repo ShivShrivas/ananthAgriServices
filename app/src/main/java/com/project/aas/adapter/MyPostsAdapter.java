@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.project.aas.AdDetail;
 import com.project.aas.R;
 import com.project.aas.model.AdPost;
+import com.project.aas.model.MyAdsPost;
 import com.project.aas.ui.slideshow.MyOrders;
 
 import org.jetbrains.annotations.NotNull;
@@ -25,12 +26,11 @@ import java.util.List;
 
 public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHolder>{
 
-    private final List<AdPost> myAdsList;
+    private final List<MyAdsPost> myAdsList;
     private final Context mContext;
-    private static String TAG = "AdRecyclerViewAdapter";
 
-    public MyPostsAdapter(List<AdPost> mAdsList, Context context) {
-        this.myAdsList = mAdsList;
+    public MyPostsAdapter(List<MyAdsPost> myAdsList, Context context) {
+        this.myAdsList = myAdsList;
         this.mContext = context;
     }
     @NonNull
@@ -41,15 +41,12 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull @NotNull MyPostsAdapter.ViewHolder holder, int position) {
 
         Glide.with(mContext)
                 .load(myAdsList.get(position).getImageUrls().get(0))
                 .placeholder(R.drawable.ic_baseline_broken_image_24)
                 .into(holder.img);
-
-        Log.i(TAG, "onBindViewHolder: Loaded Image #"+position);
 
         holder.title.setText(myAdsList.get(position).getTitle());
         holder.location.setText(myAdsList.get(position).getLocation());
@@ -57,14 +54,14 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHold
         holder.datePosted.setText("Posted On "+myAdsList.get(position).getDatePosted());
         holder.price.setText("Rs. " + myAdsList.get(position).getPrice());
 
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, AdDetail.class);
-                intent.putExtra("AdObject",myAdsList.get(position));
-                mContext.startActivity(intent);
-            }
-        });
+//        holder.layout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(mContext, AdDetail.class);
+//                intent.putExtra("MyAdObject",myAdsList.get(position));
+//                mContext.startActivity(intent);
+//            }
+//        });
 
     }
     @Override
@@ -72,7 +69,7 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHold
         return myAdsList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView img;
         ConstraintLayout layout;
         TextView title,postedBy,datePosted,location,price;

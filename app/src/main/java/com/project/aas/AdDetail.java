@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -14,15 +15,21 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.project.aas.databinding.ActivityAdDetailBinding;
 import com.project.aas.model.AdPost;
 import com.project.aas.model.AdReview;
 import com.project.aas.model.Review;
 import com.project.aas.ui.CallDialog;
 import com.project.aas.ui.SendWhatsappMessageDialog;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,14 +43,13 @@ public class AdDetail extends AppCompatActivity {
     private String TAG = "AdDetail";
     private AdPost mAd;
     private AdReview mAdReview;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAdDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
 
         mAd = (AdPost) getIntent().getSerializableExtra("AdObject");
         Log.i(TAG, "onCreate: Ad Rec : "+mAd.getPostedBy() +" | "+mAd.getPrice());
@@ -79,6 +85,19 @@ public class AdDetail extends AppCompatActivity {
                 makeOfferDialog.setName(mAd.getPostedBy());
                 makeOfferDialog.setPhone(mAd.getSellerWhatsapp());
                 makeOfferDialog.show(getSupportFragmentManager(), "sendWhatsappMessageDialog dialog");
+            }
+        });
+
+        binding.btnSaveAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.btnSaveAd.getTag().equals("save")){
+                    FirebaseDatabase.getInstance().getReference().child("saved").child(firebaseUser.getUid())
+                            .child(mAd.getId()).setValue(true);
+                }else {
+                    FirebaseDatabase.getInstance().getReference().child("saved").child(firebaseUser.getUid())
+                            .child(mAd.getId()).removeValue();
+                }
             }
         });
 
@@ -136,6 +155,7 @@ public class AdDetail extends AppCompatActivity {
             }
         });
     }
+
 
     private void postReview(double val) {
         Review review = new Review(val,"TestReviewer","This is a great product.","testauthorid");

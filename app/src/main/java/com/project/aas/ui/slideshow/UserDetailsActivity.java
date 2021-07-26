@@ -115,197 +115,202 @@ public class UserDetailsActivity extends AppCompatActivity {
         AdharNumber=findViewById(R.id.editTextPhone2);
 
         submitD=findViewById(R.id.submitD);
-        submitD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ProgressDialog pd = new ProgressDialog(UserDetailsActivity.this);
-                pd.setMessage("Please Wait...\n"+"This may take a while");
-                pd.show();
+        if(license!=null&&shopName!=null&&GSTIN!=null&&shopPhoto!=null&&
+                location!=null&&AdharNumber!=null&&Desc!=null&&editName!=null&&
+                phoneNumber!=null&&photo!=null&&aadhar!=null){
+            submitD.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ProgressDialog pd = new ProgressDialog(UserDetailsActivity.this);
+                    pd.setMessage("Please Wait...\n"+"This may take a while");
+                    pd.show();
 
-                if(UriP!=null){
-                    StorageReference fileReference= storageReference.child(System.currentTimeMillis()
-                            +""+getFileExtensions(UriP));
+                    if(UriP!=null){
+                        StorageReference fileReference= storageReference.child(System.currentTimeMillis()
+                                +""+getFileExtensions(UriP));
 
-                    uploadTask=fileReference.putFile(UriP);
-                    uploadTask.continueWithTask(new Continuation() {
-                        @Override
-                        public Object then(@NonNull @NotNull Task task) throws Exception {
-                            if(!task.isComplete()){
-                                throw task.getException();
+                        uploadTask=fileReference.putFile(UriP);
+                        uploadTask.continueWithTask(new Continuation() {
+                            @Override
+                            public Object then(@NonNull @NotNull Task task) throws Exception {
+                                if(!task.isComplete()){
+                                    throw task.getException();
+                                }
+                                return fileReference.getDownloadUrl();
                             }
-                            return fileReference.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Uri> task) {
-                            if(task.isSuccessful()){
-                                Uri downloadUri=task.getResult();
-                                myUrl = downloadUri.toString();
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<Uri> task) {
+                                if(task.isSuccessful()){
+                                    Uri downloadUri=task.getResult();
+                                    myUrl = downloadUri.toString();
 
-                                String name = firebaseUser.getUid();
+                                    String name = firebaseUser.getUid();
 
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
 
-                                String postDetails = reference.push().getKey();
-                                HashMap<String,Object> hashMap = new HashMap<>();
-                                hashMap.put("UserImage",myUrl);
-                                hashMap.put("phoneNumber",phoneNumber.getText().toString());
-                                hashMap.put("Desc",Desc.getText().toString());
-                                hashMap.put("shopName",shopName.getText().toString());
-                                hashMap.put("GSTIN",GSTIN.getText().toString());
-                                hashMap.put("Aadhar",AdharNumber.getText().toString());
-                                hashMap.put("username",editName.getText().toString());
-                                hashMap.put("location",location.getText().toString());
-                                hashMap.put("publisher",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                    String postDetails = reference.push().getKey();
+                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                    hashMap.put("UserImage",myUrl);
+                                    hashMap.put("phoneNumber",phoneNumber.getText().toString());
+                                    hashMap.put("Desc",Desc.getText().toString());
+                                    hashMap.put("shopName",shopName.getText().toString());
+                                    hashMap.put("GSTIN",GSTIN.getText().toString());
+                                    hashMap.put("Aadhar",AdharNumber.getText().toString());
+                                    hashMap.put("username",editName.getText().toString());
+                                    hashMap.put("location",location.getText().toString());
+                                    hashMap.put("publisher",FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                                assert postDetails != null;
-                                reference.child(postDetails).setValue(hashMap);
+                                    assert postDetails != null;
+                                    reference.child(postDetails).setValue(hashMap);
 
-                                pd.dismiss();
+                                    pd.dismiss();
 
-                                startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
-                            }else{
-                                Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
+                                }else{
+                                    Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
-                            Toast.makeText(UserDetailsActivity.this,""+e,Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull @NotNull Exception e) {
+                                Toast.makeText(UserDetailsActivity.this,""+e,Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
-                }if(UriS!=null){
-                    StorageReference fileReference= storageReference.child(System.currentTimeMillis()
-                            +""+getFileExtensions(UriS));
-                    uploadTask=fileReference.putFile(UriP);
-                    uploadTask.continueWithTask(new Continuation() {
-                        @Override
-                        public Object then(@NonNull @NotNull Task task) throws Exception {
-                            if(!task.isComplete()){
-                                throw task.getException();
                             }
-                            return fileReference.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Uri> task) {
-                            if(task.isSuccessful()){
-                                Uri downloadUri=task.getResult();
-                                myUrl = downloadUri.toString();
-
-                                String name = firebaseUser.getUid();
-
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
-
-                                String postDetails = reference.push().getKey();
-                                HashMap<String,Object> hashMap = new HashMap<>();
-                                hashMap.put("ShopPhoto",myUrl);
-
-                                assert postDetails != null;
-                                reference.child(postDetails).setValue(hashMap);
-                                pd.dismiss();
-                                startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
-                            }else{
-                                Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                        });
+                    }if(UriS!=null){
+                        StorageReference fileReference= storageReference.child(System.currentTimeMillis()
+                                +""+getFileExtensions(UriS));
+                        uploadTask=fileReference.putFile(UriP);
+                        uploadTask.continueWithTask(new Continuation() {
+                            @Override
+                            public Object then(@NonNull @NotNull Task task) throws Exception {
+                                if(!task.isComplete()){
+                                    throw task.getException();
+                                }
+                                return fileReference.getDownloadUrl();
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
-                            Toast.makeText(UserDetailsActivity.this,""+e,Toast.LENGTH_SHORT).show();
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<Uri> task) {
+                                if(task.isSuccessful()){
+                                    Uri downloadUri=task.getResult();
+                                    myUrl = downloadUri.toString();
 
-                        }
-                    });
-                }if(UriL!=null){
-                    StorageReference fileReference= storageReference.child(System.currentTimeMillis()
-                            +""+getFileExtensions(UriL));
-                    uploadTask=fileReference.putFile(UriL);
-                    uploadTask.continueWithTask(new Continuation() {
-                        @Override
-                        public Object then(@NonNull @NotNull Task task) throws Exception {
-                            if(!task.isComplete()){
-                                throw task.getException();
+                                    String name = firebaseUser.getUid();
+
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
+
+                                    String postDetails = reference.push().getKey();
+                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                    hashMap.put("ShopPhoto",myUrl);
+
+                                    assert postDetails != null;
+                                    reference.child(postDetails).setValue(hashMap);
+                                    pd.dismiss();
+                                    startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
+                                }else{
+                                    Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            return fileReference.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Uri> task) {
-                            if(task.isSuccessful()){
-                                Uri downloadUri=task.getResult();
-                                myUrl = downloadUri.toString();
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull @NotNull Exception e) {
+                                Toast.makeText(UserDetailsActivity.this,""+e,Toast.LENGTH_SHORT).show();
 
-                                String name = firebaseUser.getUid();
-
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
-
-                                String postDetails = reference.push().getKey();
-                                HashMap<String,Object> hashMap = new HashMap<>();
-                                hashMap.put("License",myUrl);
-
-                                assert postDetails != null;
-                                reference.child(postDetails).setValue(hashMap);
-                                pd.dismiss();
-                                startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
-                            }else{
-                                Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
-                            Toast.makeText(UserDetailsActivity.this,""+e,Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-                }if(UriA!=null){
-                    StorageReference fileReference= storageReference.child(System.currentTimeMillis()
-                            +""+getFileExtensions(UriA));
-                    uploadTask=fileReference.putFile(UriA);
-                    uploadTask.continueWithTask(new Continuation() {
-                        @Override
-                        public Object then(@NonNull @NotNull Task task) throws Exception {
-                            if(!task.isComplete()){
-                                throw task.getException();
+                        });
+                    }if(UriL!=null){
+                        StorageReference fileReference= storageReference.child(System.currentTimeMillis()
+                                +""+getFileExtensions(UriL));
+                        uploadTask=fileReference.putFile(UriL);
+                        uploadTask.continueWithTask(new Continuation() {
+                            @Override
+                            public Object then(@NonNull @NotNull Task task) throws Exception {
+                                if(!task.isComplete()){
+                                    throw task.getException();
+                                }
+                                return fileReference.getDownloadUrl();
                             }
-                            return fileReference.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Uri> task) {
-                            if(task.isSuccessful()){
-                                Uri downloadUri=task.getResult();
-                                myUrl = downloadUri.toString();
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<Uri> task) {
+                                if(task.isSuccessful()){
+                                    Uri downloadUri=task.getResult();
+                                    myUrl = downloadUri.toString();
 
-                                String name = firebaseUser.getUid();
+                                    String name = firebaseUser.getUid();
 
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
 
-                                String postDetails = reference.push().getKey();
-                                HashMap<String,Object> hashMap = new HashMap<>();
-                                hashMap.put("Aadhar",myUrl);
+                                    String postDetails = reference.push().getKey();
+                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                    hashMap.put("License",myUrl);
 
-                                assert postDetails != null;
-                                reference.child(postDetails).setValue(hashMap);
-                                pd.dismiss();
-                                startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
-                            }else{
-                                Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                    assert postDetails != null;
+                                    reference.child(postDetails).setValue(hashMap);
+                                    pd.dismiss();
+                                    startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
+                                }else{
+                                    Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
-                            Toast.makeText(UserDetailsActivity.this,""+e,Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull @NotNull Exception e) {
+                                Toast.makeText(UserDetailsActivity.this,""+e,Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
+                            }
+                        });
+                    }if(UriA!=null){
+                        StorageReference fileReference= storageReference.child(System.currentTimeMillis()
+                                +""+getFileExtensions(UriA));
+                        uploadTask=fileReference.putFile(UriA);
+                        uploadTask.continueWithTask(new Continuation() {
+                            @Override
+                            public Object then(@NonNull @NotNull Task task) throws Exception {
+                                if(!task.isComplete()){
+                                    throw task.getException();
+                                }
+                                return fileReference.getDownloadUrl();
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<Uri> task) {
+                                if(task.isSuccessful()){
+                                    Uri downloadUri=task.getResult();
+                                    myUrl = downloadUri.toString();
+
+                                    String name = firebaseUser.getUid();
+
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
+
+                                    String postDetails = reference.push().getKey();
+                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                    hashMap.put("Aadhar",myUrl);
+
+                                    assert postDetails != null;
+                                    reference.child(postDetails).setValue(hashMap);
+                                    pd.dismiss();
+                                    startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
+                                }else{
+                                    Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull @NotNull Exception e) {
+                                Toast.makeText(UserDetailsActivity.this,""+e,Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
                 }
-            }
-        });
-
-
+            });
+        }else {
+            Toast.makeText(UserDetailsActivity.this,
+                    "All fields are required",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void openImagefrom() {
