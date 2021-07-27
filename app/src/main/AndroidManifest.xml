@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AAS">
-        <activity android:name=".ui.home.Faq"></activity>
+        <activity android:name=".ui.Seeds"></activity>
+        <activity android:name=".ui.Fertilizers" />
+        <activity android:name=".ui.Tractor" />
+        <activity android:name=".ui.home.Faq" />
         <activity android:name=".ui.slideshow.UserDetailsIndividual" />
         <activity android:name=".AdReviews" />
         <activity android:name=".ui.home.Portfolio" />

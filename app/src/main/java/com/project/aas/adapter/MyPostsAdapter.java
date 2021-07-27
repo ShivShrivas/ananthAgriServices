@@ -26,10 +26,10 @@ import java.util.List;
 
 public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHolder>{
 
-    private final List<MyAdsPost> myAdsList;
+    private final List<AdPost> myAdsList;
     private final Context mContext;
 
-    public MyPostsAdapter(List<MyAdsPost> myAdsList, Context context) {
+    public MyPostsAdapter(List<AdPost> myAdsList, Context context) {
         this.myAdsList = myAdsList;
         this.mContext = context;
     }
@@ -54,15 +54,14 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.ViewHold
         holder.datePosted.setText("Posted On "+myAdsList.get(position).getDatePosted());
         holder.price.setText("Rs. " + myAdsList.get(position).getPrice());
 
-//        holder.layout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(mContext, AdDetail.class);
-//                intent.putExtra("MyAdObject",myAdsList.get(position));
-//                mContext.startActivity(intent);
-//            }
-//        });
-
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AdDetail.class);
+                intent.putExtra("AdObject",myAdsList.get(position));
+                mContext.startActivity(intent);
+            }
+        });
     }
     @Override
     public int getItemCount() {

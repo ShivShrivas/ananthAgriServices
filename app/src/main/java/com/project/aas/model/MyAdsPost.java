@@ -24,7 +24,7 @@ public class MyAdsPost implements Serializable {
     String sellerWhatsapp;
     String adType;
 
-
+    public void AdPost() {}
 
     public MyAdsPost(String id, String title, String datePosted, String location, String postedBy, String price, String sellerPhone, List<String> imageUrls, String description, String category, String subCategory, String pinCode, String priceType, String priceUnit, String sellerWhatsapp, String adType) {
         this.id = id;

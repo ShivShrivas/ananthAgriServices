@@ -121,6 +121,10 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "please Accept the terms of Service",
                             Toast.LENGTH_SHORT).show();
                     pd.dismiss();
+                }else if(individual.isChecked()&&Dealer.isChecked()){
+                    Toast.makeText(SignupActivity.this, "please Select only one option that if you're dealer or an individual",
+                            Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
                 }else{
                     register(str_name,str_email,str_password);
                 }

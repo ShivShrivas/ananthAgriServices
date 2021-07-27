@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to our store"
+            android:text="Explore the world of farners"
             android:textSize="25sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>
@@ -41,7 +41,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Get your groceries in as fast as one hour"
+            android:text="Bringing growth in farming practices"
             android:textSize="19sp"
             android:textColor="@color/black" />
     </LinearLayout>

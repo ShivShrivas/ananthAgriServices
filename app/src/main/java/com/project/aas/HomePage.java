@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,9 @@ import com.project.aas.model.AdPost;
 import com.project.aas.model.UserProfile;
 import com.project.aas.ui.AddAds;
 import com.project.aas.ui.EditProfile;
+import com.project.aas.ui.Fertilizers;
+import com.project.aas.ui.Seeds;
+import com.project.aas.ui.Tractor;
 import com.project.aas.ui.slideshow.Blogs;
 import com.project.aas.ui.slideshow.ContactUs;
 import com.project.aas.ui.slideshow.Feedback;
@@ -92,6 +96,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     FirebaseAuth mAuth;
     FirebaseUser mUser;
 
+    ImageButton tractor,fertilizers,seeds;
+
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomePageBinding binding;
 
@@ -111,6 +117,29 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         profilePhoto=findViewById(R.id.profileNavigationImage);
         name=findViewById(R.id.aa);
+
+        tractor=findViewById(R.id.machine);
+        fertilizers=findViewById(R.id.fertilizers);
+        seeds=findViewById(R.id.plants);
+
+        tractor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this, Tractor.class));
+            }
+        });
+        fertilizers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this, Fertilizers.class));
+            }
+        });
+        seeds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this, Seeds.class));
+            }
+        });
 
         setSupportActionBar(binding.appBarHomePage.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
@@ -155,20 +184,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 final int id = item.getItemId();
-                /*     case R.id.edit_profilebo:
-                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                        if(currentUser==null){
-                            Toast.makeText(getApplicationContext(),"You need to Login first.",Toast.LENGTH_SHORT).show();
-                            Bundle bundle = new Bundle();
-                            bundle.putBoolean("showSignUpPage",true);
-                            Intent intent = new Intent(HomePage.this, MainActivity.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-
-                       // }else {
-                         //   startActivity(new Intent(HomePage.this, EditProfile.class));
-                        }
-                        break;*/
                     if(id==R.id.orders) {
                         startActivity(new Intent(HomePage.this,MyOrders.class));
                 }
