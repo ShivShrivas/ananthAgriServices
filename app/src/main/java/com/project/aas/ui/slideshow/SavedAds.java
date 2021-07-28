@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +24,9 @@ import com.project.aas.HomePage;
 import com.project.aas.R;
 import com.project.aas.adapter.AdRecyclerViewAdapter;
 import com.project.aas.model.AdPost;
+import com.project.aas.ui.AddAds;
 import com.project.aas.ui.EditProfile;
+import com.project.aas.ui.Fertilizers;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +39,7 @@ public class SavedAds extends AppCompatActivity {
     ImageView back;
     TextView backt;
     AdRecyclerViewAdapter saveAdapter;
+    FloatingActionButton floatingActionButton;
 
     private List<String> savedAds;
     RecyclerView adsRecyclerView;
@@ -51,6 +56,14 @@ public class SavedAds extends AppCompatActivity {
         backt=findViewById(R.id.backkk);
         backt.setOnClickListener(v -> startActivity(new Intent(SavedAds.this, HomePage.class)));
 
+        floatingActionButton = findViewById(R.id.add_ads);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SavedAds.this, AddAds.class);
+                startActivity(intent);
+            }
+        });
 
 
         bottomNavigationView=findViewById(R.id.bottomView);

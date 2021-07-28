@@ -7,17 +7,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.project.aas.ui.slideshow.LoginActivity;
 import com.project.aas.ui.slideshow.PhoneNumber;
+import com.project.aas.ui.slideshow.SignupActivity;
 import com.project.aas.ui.slideshow.UserDetailsActivity;
 
 public class getStarted extends AppCompatActivity {
 
     Button getStarted;
+    String firebaseUserNumber;
     FirebaseUser firebaseUser;
 
     @Override
@@ -26,7 +29,7 @@ public class getStarted extends AppCompatActivity {
 
        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 
-        if( firebaseUser != null) {
+       if(firebaseUser!=null){
             startActivity(new Intent(getStarted.this, HomePage.class));
             finish();
         }

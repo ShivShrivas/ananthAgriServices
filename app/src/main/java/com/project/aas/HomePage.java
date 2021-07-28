@@ -84,7 +84,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private DrawerLayout drawerLayout;
     ImageView notifications,profilePhoto,email;
     FusedLocationProviderClient fusedLocationProviderClient;
-    TextView locationn,name;
+    TextView locationn,name,currentLocation;
     NavigationView navigationView;
     private int PERMISSION_ID = 44; 
     FloatingActionButton floatingActionButton;
@@ -107,6 +107,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
         binding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        currentLocation=findViewById(R.id.Currentlocation);
 
         adsList = new ArrayList();
         mDatabaseReference = FirebaseDatabase.getInstance();
@@ -164,7 +166,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
 
-        locationn = findViewById(R.id.location);
+       // locationn = findViewById(R.id.location);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
         navigationView = findViewById(R.id.nav_view);

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -44,12 +45,15 @@ public class AdDetail extends AppCompatActivity {
     private AdPost mAd;
     private AdReview mAdReview;
     FirebaseUser firebaseUser;
+    ImageButton save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAdDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        save=findViewById(R.id.btn_save_ad);
 
         mAd = (AdPost) getIntent().getSerializableExtra("AdObject");
         Log.i(TAG, "onCreate: Ad Rec : "+mAd.getPostedBy() +" | "+mAd.getPrice());

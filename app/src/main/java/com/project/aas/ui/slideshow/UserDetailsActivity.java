@@ -348,4 +348,9 @@ public class UserDetailsActivity extends AppCompatActivity {
         return map.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(UserDetailsActivity.this,"Please complete the Registration process first",
+                Toast.LENGTH_SHORT).show();
+    }
 }

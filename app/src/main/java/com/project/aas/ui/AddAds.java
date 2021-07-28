@@ -101,10 +101,14 @@ public class AddAds extends AppCompatActivity {
                 || adCategory.equals("") || adType.equals("") || adSubCategory.equals("")
                 || priceUnit.equals("") || priceType.equals("")) {
             Toast.makeText(this, "Fields marked with * are mandatory. Make sure to fill them.", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             if(mAdImageUrls.size() == 0) {
                 Toast.makeText(this, "You need to upload atleast ONE image of the product.", Toast.LENGTH_SHORT).show();
-            }else {
+            }else if(whatsapp.length() != 10||phone.length()!=10){
+                Toast.makeText(this, "Please give a valid number", Toast.LENGTH_SHORT).show();
+
+            }
+            else {
                 if(mCheckBox.isChecked()) {
                     Log.i(TAG, "onSubmit: Activated");
                     AdPost mNewAd = createPost();

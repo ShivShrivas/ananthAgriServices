@@ -154,4 +154,10 @@ public class UserDetailsIndividual extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(UserDetailsIndividual.this,"Please complete the Registration process first",
+                Toast.LENGTH_SHORT).show();
+    }
+
 }

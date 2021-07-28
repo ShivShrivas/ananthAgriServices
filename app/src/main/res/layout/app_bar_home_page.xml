@@ -36,7 +36,7 @@
                         android:src="@drawable/location_on_24"/>
 
                 <TextView
-                    android:id="@+id/location"
+                    android:id="@+id/Currentlocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Current Location"

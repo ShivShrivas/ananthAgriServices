@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -54,6 +55,7 @@ public class EditProfile extends AppCompatActivity {
     ImageView imageView;
     Button save;
     FirebaseAuth auth;
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,9 +116,14 @@ public class EditProfile extends AppCompatActivity {
         pd = new ProgressDialog(this);
         pd.setMessage("Please Wait...");
 
-
-
-
+        floatingActionButton = findViewById(R.id.add_ads);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditProfile.this, AddAds.class);
+                startActivity(intent);
+            }
+        });
 
         bottomNavigationView=findViewById(R.id.bottomView);
         bottomNavigationView.setBackground(null);

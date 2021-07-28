@@ -43,6 +43,23 @@
     android:layout_marginTop="60dp"
     android:layout_marginBottom="60dp"/>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/order"
+        android:layout_marginTop="200dp"/>
+    <TextView
+        android:id="@+id/textsome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="No ads posted yet"
+        android:textSize="20dp"
+        android:layout_marginTop="430dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
