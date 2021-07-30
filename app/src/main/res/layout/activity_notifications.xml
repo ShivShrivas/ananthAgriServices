@@ -40,15 +40,21 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_baseline_notifications_"
+        android:layout_marginTop="200dp"/>
     <TextView
+        android:id="@+id/textsome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notifications"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="25dp"
+        android:gravity="center_horizontal"
+        android:text="No Notifications"
+        android:textSize="20dp"
+        android:layout_marginTop="430dp"
         android:textStyle="bold"
-        android:layout_marginTop="70dp"/>
+        android:textColor="@color/black"/>
 
 </RelativeLayout>

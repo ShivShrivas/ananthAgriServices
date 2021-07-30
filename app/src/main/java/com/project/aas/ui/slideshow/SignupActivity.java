@@ -145,11 +145,20 @@ public class SignupActivity extends AppCompatActivity {
 
                             databaseReference = FirebaseDatabase.getInstance()
                                     .getReference().child("Users").child(name);
-
                             HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("name", name);
-                            hashMap.put("userName", usernameName.toLowerCase());
-                            hashMap.put("email", email);
+                            if(individual.isChecked()){
+                                hashMap.put("name", name);
+                                hashMap.put("userName", usernameName.toLowerCase());
+                                hashMap.put("email", "Individual");
+                                hashMap.put("UserEmail",email);
+                                hashMap.put("something","");
+                            }else if(Dealer.isChecked()){
+                                hashMap.put("name", name);
+                                hashMap.put("userName", usernameName.toLowerCase());
+                                hashMap.put("email", "Dealer");
+                                hashMap.put("UserEmail",email);
+                                hashMap.put("something","");
+                            }
 
                             databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.internal.cache.DiskLruCache;
+
 public class AdDetail extends AppCompatActivity {
 
     private androidx.appcompat.widget.AppCompatButton callBtn;
@@ -46,6 +48,7 @@ public class AdDetail extends AppCompatActivity {
     private AdReview mAdReview;
     FirebaseUser firebaseUser;
     ImageButton save;
+    int counter=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class AdDetail extends AppCompatActivity {
         binding = ActivityAdDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        save=findViewById(R.id.btn_save_ad);
+        save=findViewById(R.id.btnSaveAd);
 
         mAd = (AdPost) getIntent().getSerializableExtra("AdObject");
         Log.i(TAG, "onCreate: Ad Rec : "+mAd.getPostedBy() +" | "+mAd.getPrice());
@@ -95,12 +98,44 @@ public class AdDetail extends AppCompatActivity {
         binding.btnSaveAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(binding.btnSaveAd.getTag().equals("save")){
-                    FirebaseDatabase.getInstance().getReference().child("saved").child(firebaseUser.getUid())
-                            .child(mAd.getId()).setValue(true);
-                }else {
-                    FirebaseDatabase.getInstance().getReference().child("saved").child(firebaseUser.getUid())
-                            .child(mAd.getId()).removeValue();
+                if(counter==0){
+                    Log.d("Button Clicked","Saved");
+                    String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    DatabaseReference child=FirebaseDatabase.getInstance().getReference().child("Ads");
+                    child.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                            for(DataSnapshot snapShot1 : snapshot.getChildren()){
+                                if (snapshot.exists()){
+
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                        }
+                    });
+
+                    if(binding.btnSaveAd.getTag().equals("default")){
+                        binding.btnSaveAd.setTag("Saved");
+                        HashMap<String,String>hashMap=new HashMap<>();
+                        hashMap.put("id", mAd.getAdId());
+                        FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("saved").push().setValue(hashMap);
+                        save.setImageResource(R.drawable.savedads);
+                        Toast.makeText(AdDetail.this,"Saved Ad",Toast.LENGTH_SHORT).show();
+                        counter=1;
+                        //FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("saved").removeValue();
+                        //Log.d(newF,"hello");
+                    }
+                }else if(counter==1){
+                    String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("saved").removeValue();
+                    save.setImageResource(R.drawable.ic_like);
+                    Toast.makeText(AdDetail.this,"Removed from Saved Ads",Toast.LENGTH_SHORT).show();
+                    counter=0;
                 }
             }
         });
@@ -202,7 +237,7 @@ public class AdDetail extends AppCompatActivity {
 
 //        AdReview obj = new AdReview();
 
-                // Code below adds new review to the list of reviews.
+        // Code below adds new review to the list of reviews.
 
     }
 }

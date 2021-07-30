@@ -9,6 +9,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -42,6 +43,7 @@ public class UserDetailsIndividual extends AppCompatActivity {
     StorageReference storageReference;
     private static final int REQUEST_CODE=1;
     private FirebaseUser firebaseUser;
+    FirebaseDatabase databaseReference;
 
     ImageView photo;
     EditText phoneNumber,Desc,editName,location;
@@ -59,6 +61,8 @@ public class UserDetailsIndividual extends AppCompatActivity {
         editName=findViewById(R.id.editName);
         location=findViewById(R.id.editTextTextPersonName2);
 
+
+
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         storageReference= FirebaseStorage.getInstance().getReference("details");
 
@@ -72,61 +76,79 @@ public class UserDetailsIndividual extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProgressDialog pd = new ProgressDialog(UserDetailsIndividual.this);
-                pd.setMessage("Please Wait...");
-                pd.show();
 
-                if(imageUri!=null){
-                    StorageReference fileReference= storageReference.child(System.currentTimeMillis()
-                    +""+getFileExtensions(imageUri));
+                String phoneN=phoneNumber.getText().toString();
+                String desc=Desc.getText().toString();
+                String editname=editName.getText().toString();
+                String Location=location.getText().toString();
+                if(TextUtils.isEmpty(phoneN)||TextUtils.isEmpty(desc)||
+                        TextUtils.isEmpty(editname)||TextUtils.isEmpty(Location)){
+                    Toast.makeText(UserDetailsIndividual.this,
+                            "All fields are required",Toast.LENGTH_SHORT).show();
+                }else  if(phoneN.length()!=10){
+                    Toast.makeText(UserDetailsIndividual.this,
+                            "Please enter a valid Phone Number",Toast.LENGTH_SHORT).show();
+                } else{
+                    ProgressDialog pd = new ProgressDialog(UserDetailsIndividual.this);
+                    pd.setMessage("Please Wait...\n"+"This may take a while");
+                    pd.show();
 
-                    uploadTask=fileReference.putFile(imageUri);
-                    uploadTask.continueWithTask(new Continuation() {
-                        @Override
-                        public Object then(@NonNull @NotNull Task task) throws Exception {
-                            if(!task.isComplete()){
-                                throw task.getException();
+                    if(imageUri!=null){
+                        StorageReference fileReference= storageReference.child(System.currentTimeMillis()
+                                +""+getFileExtensions(imageUri));
+
+                        uploadTask=fileReference.putFile(imageUri);
+                        uploadTask.continueWithTask(new Continuation() {
+                            @Override
+                            public Object then(@NonNull @NotNull Task task) throws Exception {
+                                if(!task.isComplete()){
+                                    throw task.getException();
+                                }
+                                return fileReference.getDownloadUrl();
                             }
-                            return fileReference.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Uri> task) {
-                            if(task.isSuccessful()){
-                                Uri downloadUri=task.getResult();
-                                myUrl = downloadUri.toString();
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<Uri> task) {
+                                if(task.isSuccessful()){
+                                    Uri downloadUri=task.getResult();
+                                    myUrl = downloadUri.toString();
 
-                                String name = firebaseUser.getUid();
+                                    String name = firebaseUser.getUid();
 
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
 
-                                String postDetails = reference.push().getKey();
-                                HashMap<String,Object> hashMap = new HashMap<>();
-                                hashMap.put("UserImage",myUrl);
-                                hashMap.put("phoneNumber",phoneNumber.getText().toString());
-                                hashMap.put("Desc",Desc.getText().toString());
-                                hashMap.put("username",editName.getText().toString());
-                                hashMap.put("location",location.getText().toString());
-                                hashMap.put("publisher",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                    String postDetails = reference.push().getKey();
+                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                    hashMap.put("UserImage",myUrl);
+                                    hashMap.put("phoneNumber",phoneNumber.getText().toString());
+                                    hashMap.put("Desc",Desc.getText().toString());
+                                    hashMap.put("username",editName.getText().toString());
+                                    hashMap.put("location",location.getText().toString());
+                                    hashMap.put("publisher",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                    assert postDetails != null;
+                                    reference.child(postDetails).setValue(hashMap);
 
-                                assert postDetails != null;
-                                reference.child(postDetails).setValue(hashMap);
+                                    pd.dismiss();
 
-                                pd.dismiss();
-
-                                startActivity(new Intent(UserDetailsIndividual.this, HomePage.class));
-                            }else{
-                                Toast.makeText(UserDetailsIndividual.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(UserDetailsIndividual.this, HomePage.class));
+                                }else{
+                                    Toast.makeText(UserDetailsIndividual.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
-                            Toast.makeText(UserDetailsIndividual.this,""+e,Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull @NotNull Exception e) {
+                                Toast.makeText(UserDetailsIndividual.this,""+e,Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
+                            }
+                        });
+                    }else {
+                        pd.dismiss();
+                        Toast.makeText(UserDetailsIndividual.this,"Please select a profile picture",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
 

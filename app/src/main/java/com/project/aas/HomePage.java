@@ -58,6 +58,7 @@ import com.project.aas.ui.slideshow.Notifications;
 import com.project.aas.ui.slideshow.PhoneNumber;
 import com.project.aas.ui.slideshow.SavedAds;
 import com.project.aas.ui.slideshow.Settings;
+import com.project.aas.ui.slideshow.UserDetailsIndividual;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -84,6 +85,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private DrawerLayout drawerLayout;
     ImageView notifications,profilePhoto,email;
     FusedLocationProviderClient fusedLocationProviderClient;
+    private long backPressedTime;
     TextView locationn,name,currentLocation;
     NavigationView navigationView;
     private int PERMISSION_ID = 44; 
@@ -210,7 +212,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         imageSlider.setImageList(slideModels);
         imageSlider.startSliding(3000);
     }
-
 
     private void populateList() {
         fetchAds();
@@ -402,4 +403,17 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(backPressedTime+2000>System.currentTimeMillis()){
+            super.onBackPressed();
+            return;
+        }else{
+            Toast.makeText(HomePage.this,"Press back again to exit",Toast.LENGTH_SHORT).show();
+        }
+
+
+        backPressedTime=System.currentTimeMillis();
+
+    }
 }

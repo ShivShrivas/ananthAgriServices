@@ -30,7 +30,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="16dp"
-                app:srcCompat="@drawable/ic_person_outline" />
+                app:srcCompat="@drawable/camera_alt_24" />
 
             <EditText
                 android:id="@+id/editName"
@@ -50,21 +50,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="150dp"
-                android:text="Contact Information"
+                android:text="Contact Information *"
                 android:textColor="#090909"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="225dp"
-                android:layout_marginLeft="225dp"
-                android:layout_marginTop="150dp"
-                android:text="*"
-                android:textColor="#FF5722"
-                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/Information"
@@ -81,23 +71,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-
+                android:textSize="17dp"
                 android:layout_marginTop="220dp"
                 android:ems="10"
                 android:hint="Enter your phone number"
                 android:inputType="textEmailAddress" />
 
-            <TextView
-                android:id="@+id/changeMailText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="305dp"
-                android:layout_marginLeft="305dp"
-                android:layout_marginTop="255dp"
-                android:layout_marginBottom="8dp"
-                android:text="change"
-                android:textColor="#4CAF50"
-                android:textSize="20sp" />
+
 
             <EditText
                 android:id="@+id/editTextTextPersonName"
@@ -105,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
+                android:textSize="17dp"
                 android:layout_marginTop="320dp"
                 android:ems="10"
                 android:hint="Enter your description here"
@@ -115,9 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="280dp"
-                android:text="Description"
+                android:text="Description *"
                 android:textColor="#0E0E0E"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -126,21 +106,11 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="320dp"
-                android:layout_marginLeft="320dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="355dp"
                 android:text="0/250" />
 
-            <TextView
-                android:id="@+id/star3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="135dp"
-                android:layout_marginLeft="135dp"
-                android:layout_marginTop="280dp"
-                android:text="*"
-                android:textColor="#FF5722"
-                android:textSize="20sp" />
 
 
         </androidx.cardview.widget.CardView>
@@ -166,7 +136,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Location"
+                android:text="Location *"
                 android:textColor="#101010"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -176,21 +146,12 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="50dp"
+                android:textSize="17dp"
                 android:ems="10"
-                android:hint="enter your location"
+                android:hint="Enter your location"
                 android:inputType="textPersonName" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="240dp"
-                android:layout_marginLeft="240dp"
-                android:layout_marginTop="90dp"
-                android:text="Use current location"
-                android:textColor="#4CAF50" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout

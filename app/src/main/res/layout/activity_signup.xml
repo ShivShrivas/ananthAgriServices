@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="#EAE4E4"
             app:passwordToggleEnabled="true"
-            android:hint="Enter your password"
+            android:hint="Re-Enter your password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.432"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Individual"
+            android:textSize="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.106"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Dealer"
+            android:textSize="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.106"
             app:layout_constraintStart_toStartOf="parent"
@@ -155,7 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Signup"
+            android:text=""
             android:textColor="#1C1C1C"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -204,7 +206,8 @@
             android:layout_height="41dp"
             android:layout_marginTop="84dp"
             android:ems="10"
-            android:hint="enter your email"
+            android:hint="Enter your email"
+            android:textSize="17dp"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.432"
@@ -216,35 +219,47 @@
             android:layout_height="41dp"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:hint="enter your username "
+            android:textSize="17dp"
+            android:hint="Enter your username "
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.432"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="  By continuing you agree to our "
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.525"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Dealer" />
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Terms of Service and Privacy Policy"
-            android:textColor="#4CAF50"
+       <LinearLayout
+           android:id="@+id/linear"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center_horizontal"
+           app:layout_constraintTop_toBottomOf="@+id/Dealer">
+           <CheckBox
+               android:id="@+id/checkBox"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="15dp"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.525"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/Dealer" />
+           <TextView
+               android:id="@+id/textView14"
+               android:layout_width="230dp"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="4dp"
+               android:text="By continuing you agree to our Terms of Service and Privacy Policy"
+               android:textColor="#4CAF50"
+
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.502"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+       </LinearLayout>
+
+
+
 
 
 
@@ -252,7 +267,7 @@
             android:id="@+id/ll1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/textView14"
+            app:layout_constraintTop_toBottomOf="@+id/linear"
             android:gravity="center_horizontal">
             <Button
                 android:id="@+id/register_user"

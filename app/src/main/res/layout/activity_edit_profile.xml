@@ -50,15 +50,17 @@
         android:background="@drawable/ic_group_3"
         android:drawableEnd="@drawable/ic_baseline_edit_24"
         android:drawableTint="@android:color/darker_gray"
+        android:hint="Name"
         android:maxLines="1"
         android:paddingVertical="4dp"
         android:paddingStart="12dp"
         android:paddingEnd="8dp"
-        android:hint="Name"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/iv_display_picture"
-        app:layout_constraintEnd_toEndOf="@+id/et_description"
-        app:layout_constraintTop_toTopOf="@+id/iv_display_picture" />
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_display_picture"
+        app:layout_constraintTop_toTopOf="@+id/iv_display_picture"
+        app:layout_constraintVertical_bias="0.492" />
 
     <TextView
         android:layout_width="wrap_content"

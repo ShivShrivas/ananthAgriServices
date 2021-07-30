@@ -65,17 +65,18 @@
                 android:background="@color/white"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_share"
-                app:layout_constraintEnd_toStartOf="@+id/btn_save_ad"
+                app:layout_constraintEnd_toStartOf="@+id/btnSaveAd"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/btn_save_ad"
+                android:id="@+id/btnSaveAd"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_marginEnd="32dp"
                 android:background="@color/white"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_like"
+                android:tag="default"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_share_ad"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
