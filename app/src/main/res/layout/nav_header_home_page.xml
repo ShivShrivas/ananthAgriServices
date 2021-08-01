@@ -12,18 +12,17 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileNavigationImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/alogo" />
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:textColor="@color/white"
-        android:id="@+id/aa"
+        android:id="@+id/UserNameaa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"

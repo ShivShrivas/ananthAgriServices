@@ -45,6 +45,8 @@ public class AdPost implements Serializable {
         this.adType = adType;
     }
 
+
+
     public String getAdId(){
         return id;
     }

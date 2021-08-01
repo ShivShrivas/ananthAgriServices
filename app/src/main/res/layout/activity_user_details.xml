@@ -14,10 +14,12 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="379dp"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_height="411dp"
             app:cardCornerRadius="20dp"
-            app:cardElevation="20dp"
+            app:cardElevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.593"
@@ -25,25 +27,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.02">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView"
                 android:layout_width="119dp"
                 android:layout_height="118dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="16dp"
-                app:srcCompat="@drawable/icon_camera" />
 
-            <EditText
-                android:id="@+id/editName"
-                android:layout_width="188dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
-                android:layout_marginTop="40dp"
-                android:ems="10"
-                android:textSize="17dp"
-                android:hint="Enter your name here "
-                android:inputType="textPersonName" />
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/camera_alt_24"/>
+
+
 
             <TextView
                 android:id="@+id/ContactInformation"
@@ -62,29 +55,29 @@
                 android:layout_width="299dp"
                 android:layout_height="41dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="180dp"
                 android:text="This is the information for buyers, reminders and other notifications" />
 
             <EditText
                 android:id="@+id/EmailEdit"
-                android:layout_width="355dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:layout_marginTop="220dp"
                 android:ems="10"
                 android:hint="Enter your phone number"
-                android:inputType="textEmailAddress" />
+                android:inputType="number" />
 
 
 
             <EditText
                 android:id="@+id/editTextTextPersonName"
-                android:layout_width="352dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="320dp"
                 android:textSize="17dp"
@@ -119,7 +112,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
-            android:layout_width="377dp"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_height="128dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="20dp"
@@ -145,9 +140,11 @@
 
             <EditText
                 android:id="@+id/editTextTextPersonName2"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
+
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="50dp"
                 android:ems="10"
@@ -160,7 +157,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView4"
-            android:layout_width="379dp"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="20dp"
             app:cardElevation="20dp"
@@ -188,7 +187,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="60dp"
                 android:text="Shop Name "
                 android:textColor="#191818"
@@ -197,11 +195,12 @@
 
             <EditText
                 android:id="@+id/editTextTextPersonName3"
-                android:layout_width="285dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
+                android:hint="Enter your Shop name"
                 android:ems="10"
                 android:textSize="17dp"
                 android:inputType="textPersonName" />
@@ -265,9 +264,10 @@
 
             <EditText
                 android:id="@+id/editTextPhone"
-                android:layout_width="277dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="410dp"
                 android:ems="10"
                 android:textSize="17dp"
@@ -286,9 +286,10 @@
 
             <EditText
                 android:id="@+id/editTextPhone2"
-                android:layout_width="279dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="490dp"
                 android:ems="10"
                 android:inputType="phone" />

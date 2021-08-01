@@ -104,7 +104,6 @@
                 android:hint="@string/your_ans1"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
-                android:inputType="textAutoComplete"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -176,7 +175,6 @@
                 android:hint="@string/your_answer"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
-                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -200,7 +198,6 @@
                 android:hint="@string/dd_mm_yy"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
-                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -224,7 +221,6 @@
                 android:hint="@string/dd_mm_yy"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
-                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -248,7 +244,6 @@
                 android:hint="@string/your_answer"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
-                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -272,7 +267,6 @@
                 android:hint="@string/your_answer"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
-                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -296,7 +290,6 @@
                 android:hint="@string/your_answer"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
-                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

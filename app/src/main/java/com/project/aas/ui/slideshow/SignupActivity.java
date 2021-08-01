@@ -35,6 +35,7 @@ public class SignupActivity extends AppCompatActivity {
     private Button register;
     EditText name,mobile,email,password,password2;
     TextInputEditText password1,password0;
+    private long backPressedTime;
     TextView terms;
     FirebaseAuth auth;
     DatabaseReference databaseReference;
@@ -149,15 +150,23 @@ public class SignupActivity extends AppCompatActivity {
                             if(individual.isChecked()){
                                 hashMap.put("name", name);
                                 hashMap.put("userName", usernameName.toLowerCase());
-                                hashMap.put("email", "Individual");
-                                hashMap.put("UserEmail",email);
-                                hashMap.put("something","");
+                                hashMap.put("userType", "Individual");
+                                hashMap.put("userEmail",email);
+                                hashMap.put("desc", "");
+                                hashMap.put("UserImage", "");
+                                hashMap.put("location", "");
+                                hashMap.put("phoneNumber", "");
+                                hashMap.put("publisher","");
                             }else if(Dealer.isChecked()){
                                 hashMap.put("name", name);
                                 hashMap.put("userName", usernameName.toLowerCase());
-                                hashMap.put("email", "Dealer");
-                                hashMap.put("UserEmail",email);
-                                hashMap.put("something","");
+                                hashMap.put("userType", "Dealer");
+                                hashMap.put("userEmail",email);
+                                hashMap.put("desc", "");
+                                hashMap.put("UserImage", "");
+                                hashMap.put("location", "");
+                                hashMap.put("phoneNumber", "");
+                                hashMap.put("publisher","");
                             }
 
                             databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -180,7 +189,7 @@ public class SignupActivity extends AppCompatActivity {
                             });
                         } else {
                             pd.dismiss();
-                            Toast.makeText(SignupActivity.this, "You can't register with this email or password",
+                            Toast.makeText(SignupActivity.this, "Please register with a different Mail Id",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -192,5 +201,19 @@ public class SignupActivity extends AppCompatActivity {
         ExampleDialog1 exampleDialog = new ExampleDialog1();
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
+    @Override
+    public void onBackPressed() {
+        if(backPressedTime+2000>System.currentTimeMillis()){
+            super.onBackPressed();
+            return;
+        }else{
+            Toast.makeText(SignupActivity.this,"Press back again to exit",Toast.LENGTH_SHORT).show();
+        }
+
+
+        backPressedTime=System.currentTimeMillis();
+
+    }
+
 
 }

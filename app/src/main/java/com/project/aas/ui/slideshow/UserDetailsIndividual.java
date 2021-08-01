@@ -35,6 +35,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserDetailsIndividual extends AppCompatActivity {
 
     Uri imageUri;
@@ -44,8 +46,8 @@ public class UserDetailsIndividual extends AppCompatActivity {
     private static final int REQUEST_CODE=1;
     private FirebaseUser firebaseUser;
     FirebaseDatabase databaseReference;
-
-    ImageView photo;
+    private long backPressedTime;
+    CircleImageView photo;
     EditText phoneNumber,Desc,editName,location;
     Button submit;
 
@@ -58,10 +60,7 @@ public class UserDetailsIndividual extends AppCompatActivity {
         phoneNumber=findViewById(R.id.EmailEdit);
         Desc=findViewById(R.id.editTextTextPersonName);
         submit=findViewById(R.id.submit);
-        editName=findViewById(R.id.editName);
         location=findViewById(R.id.editTextTextPersonName2);
-
-
 
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         storageReference= FirebaseStorage.getInstance().getReference("details");
@@ -79,10 +78,10 @@ public class UserDetailsIndividual extends AppCompatActivity {
 
                 String phoneN=phoneNumber.getText().toString();
                 String desc=Desc.getText().toString();
-                String editname=editName.getText().toString();
+
                 String Location=location.getText().toString();
                 if(TextUtils.isEmpty(phoneN)||TextUtils.isEmpty(desc)||
-                        TextUtils.isEmpty(editname)||TextUtils.isEmpty(Location)){
+                        TextUtils.isEmpty(Location)){
                     Toast.makeText(UserDetailsIndividual.this,
                             "All fields are required",Toast.LENGTH_SHORT).show();
                 }else  if(phoneN.length()!=10){
@@ -117,16 +116,15 @@ public class UserDetailsIndividual extends AppCompatActivity {
 
                                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
 
-                                    String postDetails = reference.push().getKey();
+                                    //String postDetails = reference.push().getKey();
                                     HashMap<String,Object> hashMap = new HashMap<>();
                                     hashMap.put("UserImage",myUrl);
                                     hashMap.put("phoneNumber",phoneNumber.getText().toString());
-                                    hashMap.put("Desc",Desc.getText().toString());
-                                    hashMap.put("username",editName.getText().toString());
+                                    hashMap.put("desc",Desc.getText().toString());
                                     hashMap.put("location",location.getText().toString());
                                     hashMap.put("publisher",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                    assert postDetails != null;
-                                    reference.child(postDetails).setValue(hashMap);
+                                    //assert postDetails != null;
+                                    reference.updateChildren(hashMap);
 
                                     pd.dismiss();
 
@@ -178,8 +176,15 @@ public class UserDetailsIndividual extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(UserDetailsIndividual.this,"Please complete the Registration process first",
-                Toast.LENGTH_SHORT).show();
-    }
+        if(backPressedTime+2000>System.currentTimeMillis()){
+            super.onBackPressed();
+            return;
+        }else{
+            Toast.makeText(UserDetailsIndividual.this,"Press back again to exit",Toast.LENGTH_SHORT).show();
+        }
 
+
+        backPressedTime=System.currentTimeMillis();
+
+    }
 }

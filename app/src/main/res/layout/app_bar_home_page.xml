@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:layout_gravity="center_horizontal"
             app:popupTheme="@style/Theme.AAS.PopupOverlay" >
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout

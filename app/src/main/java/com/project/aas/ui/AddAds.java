@@ -182,7 +182,6 @@ public class AddAds extends AppCompatActivity {
                         mAdImageUris.add(data.getClipData().getItemAt(i).getUri().toString());
                     }
                 }
-
                 uploadAdImages();
             }
         }

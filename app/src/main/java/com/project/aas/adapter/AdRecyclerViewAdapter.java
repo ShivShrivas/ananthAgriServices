@@ -48,7 +48,6 @@ public class AdRecyclerViewAdapter extends RecyclerView.Adapter<AdRecyclerViewAd
 
         Log.i(TAG, "onBindViewHolder: Loaded Image #"+position);
 
-
         holder.title.setText(mAdsList.get(position).getTitle());
         holder.location.setText(mAdsList.get(position).getLocation());
         holder.postedBy.setText(mAdsList.get(position).getPostedBy());

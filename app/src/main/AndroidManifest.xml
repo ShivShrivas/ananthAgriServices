@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AAS">
-        <activity android:name=".ui.Seeds"></activity>
+        <activity android:name=".getStarted" />
+        <activity android:name=".ui.home.cityFinder" />
+        <activity android:name=".ui.home.Weather" />
+        <activity android:name=".ui.Seeds" />
         <activity android:name=".ui.Fertilizers" />
         <activity android:name=".ui.Tractor" />
         <activity android:name=".ui.home.Faq" />
@@ -44,7 +47,7 @@
             android:name=".HomePage"
             android:label="@string/title_activity_home_page"
             android:theme="@style/Theme.AAS.NoActionBar" />
-        <activity android:name=".getStarted">
+        <activity android:name=".ui.home.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

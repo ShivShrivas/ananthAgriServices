@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.AboutUs;
+import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -49,6 +50,7 @@ import com.project.aas.ui.EditProfile;
 import com.project.aas.ui.Fertilizers;
 import com.project.aas.ui.Seeds;
 import com.project.aas.ui.Tractor;
+import com.project.aas.ui.home.Weather;
 import com.project.aas.ui.slideshow.Blogs;
 import com.project.aas.ui.slideshow.ContactUs;
 import com.project.aas.ui.slideshow.Feedback;
@@ -78,23 +80,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
     private DrawerLayout drawerLayout;
-    ImageView notifications,profilePhoto,email;
+    ImageView notifications;
     FusedLocationProviderClient fusedLocationProviderClient;
     private long backPressedTime;
     TextView locationn,name,currentLocation;
     NavigationView navigationView;
+    String profileImageUrlV,usernameUrlV;
+    ImageView profileImageViewHeader;
+    TextView LocationHeader;
     private int PERMISSION_ID = 44; 
     FloatingActionButton floatingActionButton;
     List<AdPost> adsList;
     private String TAG = "HomePage";
     RecyclerView adsRecyclerView;
     private FirebaseDatabase mDatabaseReference;
-    DatabaseReference mUserRef;
+    DatabaseReference mUserRef,mImageRef;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
 
@@ -110,7 +118,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         binding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        currentLocation=findViewById(R.id.Currentlocation);
+        LocationHeader=findViewById(R.id.Currentlocation);
 
         adsList = new ArrayList();
         mDatabaseReference = FirebaseDatabase.getInstance();
@@ -119,8 +127,29 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         mUser=mAuth.getCurrentUser();
         mUserRef=FirebaseDatabase.getInstance().getReference("Users");
 
-        profilePhoto=findViewById(R.id.profileNavigationImage);
-        name=findViewById(R.id.aa);
+        navigationView=findViewById(R.id.nav_view);
+        View headerView=navigationView.getHeaderView(0);
+        TextView nameUser= headerView.findViewById(R.id.UserNameaa);
+        CircleImageView imageUser=headerView.findViewById(R.id.profileNavigationImage);
+        mUserRef.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot datasnapshot) {
+                    profileImageUrlV=datasnapshot.child("UserImage").getValue().toString();
+                    String s =  datasnapshot.child("userName").getValue(String.class);
+                    Glide.with(HomePage.this).load(profileImageUrlV).into(imageUser);
+                    nameUser.setText(s);
+                    String l = datasnapshot.child("location").getValue(String.class);
+                    LocationHeader.setText(l);
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                Toast.makeText(HomePage.this, "Error in loading data", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
         tractor=findViewById(R.id.machine);
         fertilizers=findViewById(R.id.fertilizers);
@@ -295,6 +324,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             Intent intent2 = new Intent(HomePage.this, Blogs.class);
             startActivity(intent2);
         }
+        if(id==R.id.weather){
+            startActivity(new Intent(HomePage.this, Weather.class));
+        }
         if (id == R.id.about_usMessage) {
             startActivity(new Intent(HomePage.this, AboutUs.class));
         }
@@ -345,46 +377,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     @SuppressLint("MissingPermission")
     private void getLocation() {
-        if (isLocationPermissionGranted()) {
-            // Permissions are granted
-            Log.i(TAG, "getLocation: Permissions in place");
-            if(isLocationEnabled()) {
-                Log.i(TAG, "getLocation: Location Enabled");
-                fusedLocationProviderClient.getLastLocation()
-                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                if (location != null) {
-                                    Geocoder geocoder = new Geocoder(HomePage.this, Locale.getDefault());
-                                    try {
-                                        List<Address> addresses = geocoder.getFromLocation(
-                                                location.getLatitude(), location.getLongitude(), 1
-                                        );
-                                        Log.i(TAG, "onSuccess: Found Location");
-                                        locationn.setText(Html.fromHtml(
-                                                "<font color='#6200EE'><b>Locality : </b><br></font>"+
-                                                        addresses.get(0).getLocality()
-                                        ));
 
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        });
-            } else {
-                // Prompt user to turn on location
-                Toast.makeText(this, "Please turn on" + " your location.", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        }else {
-            // Else ask for permissions
-            Log.i(TAG, "getLocation: Permissions required");
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
-        }
     }
 
     private boolean isLocationPermissionGranted() {
@@ -416,4 +409,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         backPressedTime=System.currentTimeMillis();
 
     }
+
+
 }

@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Explore the world of farners"
+            android:text="Explore the world of farmers"
             android:textSize="25sp"
             android:textColor="@color/black"
             android:textStyle="bold"/>

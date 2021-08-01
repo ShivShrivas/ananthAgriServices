@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button login;
     EditText mobile,password;
+    private long backPressedTime;
     TextInputEditText passwordI;
     FirebaseAuth auth;
     TextView forgotPassword,signuptop,signupbottom;
@@ -127,4 +128,18 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    public void onBackPressed() {
+        if(backPressedTime+2000>System.currentTimeMillis()){
+            super.onBackPressed();
+            return;
+        }else{
+            Toast.makeText(LoginActivity.this,"Press back again to exit",Toast.LENGTH_SHORT).show();
+        }
+
+
+        backPressedTime=System.currentTimeMillis();
+
+    }
+
 }

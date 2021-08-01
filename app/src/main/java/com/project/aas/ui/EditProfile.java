@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -32,11 +35,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.project.aas.HomePage;
 import com.project.aas.R;
 import com.project.aas.ui.slideshow.MyOrders;
 import com.project.aas.ui.slideshow.SavedAds;
+import com.project.aas.ui.slideshow.UserDetailsIndividual;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -49,11 +54,15 @@ public class EditProfile extends AppCompatActivity {
     private static final int REQUEST_CODE=1;
     ImageButton back;
     Uri imageUri;
+    StorageTask uploadTask;
+    String myUrl="";
+    StorageReference storageReference;
     private static int CHOOSE_IMAGE_CODE = 11;
     private String TAG = "EditProfileActivity";
     private ProgressDialog pd;
     ImageView imageView;
     Button save;
+    private FirebaseUser firebaseUser;
     FirebaseAuth auth;
     FloatingActionButton floatingActionButton;
 
@@ -61,6 +70,9 @@ public class EditProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        storageReference= FirebaseStorage.getInstance().getReference("details");
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 
         imageView= findViewById(R.id.iv_display_picture);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -99,18 +111,55 @@ public class EditProfile extends AppCompatActivity {
                 DatabaseReference databaseReference= FirebaseDatabase.getInstance()
                         .getReference().child("Users").child(name);
                 //String postDetails = databaseReference.push().getKey();
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("name", str_name);
-//                //hashMap.put("userName", usernameName.toLowerCase());
-                hashMap.put("userName",str_phone);
-                //hashMap.put("",str_desc);
-                hashMap.put("email", str_email);
-                databaseReference.updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        startActivity(new Intent(EditProfile.this,HomePage.class));
-                    }
-                });
+                if(imageUri!=null){
+                    StorageReference fileReference= storageReference.child(System.currentTimeMillis()
+                            +""+getFileExtensions(imageUri));
+
+                    uploadTask=fileReference.putFile(imageUri);
+                    uploadTask.continueWithTask(new Continuation() {
+                        @Override
+                        public Object then(@NonNull @NotNull Task task) throws Exception {
+                            if(!task.isComplete()){
+                                throw task.getException();
+                            }
+                            return fileReference.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Uri> task) {
+                            if(task.isSuccessful()){
+                                Uri downloadUri=task.getResult();
+                                myUrl = downloadUri.toString();
+
+                                String name = firebaseUser.getUid();
+
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
+
+                                //String postDetails = reference.push().getKey();
+                                HashMap<String,Object> hashMap = new HashMap<>();
+                                hashMap.put("UserImage",myUrl);
+                                hashMap.put("phoneNumber",str_phone);
+                                hashMap.put("userEmail", str_email);
+                                hashMap.put("userName", str_name);
+                                //assert postDetails != null;
+                                reference.updateChildren(hashMap);
+
+                                pd.dismiss();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
+                            Toast.makeText(EditProfile.this,""+e,Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                }else {
+                    pd.dismiss();
+                    Toast.makeText(EditProfile.this,"Please select a profile picture",
+                            Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         pd = new ProgressDialog(this);
@@ -203,5 +252,10 @@ public class EditProfile extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,REQUEST_CODE);
+    }
+    private String getFileExtensions(Uri uri){
+        ContentResolver contentResolver=getContentResolver();
+        MimeTypeMap map=MimeTypeMap.getSingleton();
+        return map.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 }

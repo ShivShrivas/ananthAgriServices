@@ -11,6 +11,10 @@
             android:icon="@drawable/contact_phone_24"
             android:title="Contact us" />
         <item
+            android:id="@+id/weather"
+            android:icon="@drawable/weather"
+            android:title="Weather Report" />
+        <item
             android:id="@+id/blogs"
             android:icon="@drawable/blog"
             android:title="Our blogs" />

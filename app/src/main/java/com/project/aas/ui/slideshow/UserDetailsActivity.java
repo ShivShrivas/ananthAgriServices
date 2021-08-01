@@ -46,6 +46,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserDetailsActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE=1;
@@ -53,13 +55,15 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     Uri imageUri,UriL,UriA,UriS,UriP;
     String myUrl="";
+    private long backPressedTime;
+    CircleImageView photo;
     int counter;
     StorageTask uploadTask;
     StorageReference storageReference;
     public static final int REQUEST_CODEE=1;
     private FirebaseUser firebaseUser;
 
-    ImageView photo,license,shopPhoto,aadhar;
+    ImageView license,shopPhoto,aadhar;
     EditText phoneNumber,Desc,editName,location,shopName,GSTIN,AdharNumber;
     Button submitD;
 
@@ -80,7 +84,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 counter=2;
-               openImagefrom();
+                openImagefrom();
             }
         });
         shopPhoto.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +98,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 counter=3;
-               openImagefrom();
+                openImagefrom();
             }
         });
         photo= findViewById(R.id.imageView);
@@ -102,12 +106,11 @@ public class UserDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 counter=0;
-               openImagefrom();
+                openImagefrom();
             }
         });
 
         phoneNumber=findViewById(R.id.EmailEdit);
-        editName=findViewById(R.id.editName);
         location=findViewById(R.id.editTextTextPersonName2);
         Desc=findViewById(R.id.editTextTextPersonName);
         shopName=findViewById(R.id.editTextTextPersonName3);
@@ -116,7 +119,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         submitD=findViewById(R.id.submitD);
         if(license!=null&&shopName!=null&&GSTIN!=null&&shopPhoto!=null&&
-                location!=null&&AdharNumber!=null&&Desc!=null&&editName!=null&&
+                location!=null&&AdharNumber!=null&&Desc!=null&&
                 phoneNumber!=null&&photo!=null&&aadhar!=null){
             submitD.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -149,26 +152,25 @@ public class UserDetailsActivity extends AppCompatActivity {
 
                                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
 
-                                    String postDetails = reference.push().getKey();
+                                    //String postDetails = reference.push().getKey();
                                     HashMap<String,Object> hashMap = new HashMap<>();
                                     hashMap.put("UserImage",myUrl);
                                     hashMap.put("phoneNumber",phoneNumber.getText().toString());
-                                    hashMap.put("Desc",Desc.getText().toString());
+                                    hashMap.put("desc",Desc.getText().toString());
                                     hashMap.put("shopName",shopName.getText().toString());
                                     hashMap.put("GSTIN",GSTIN.getText().toString());
                                     hashMap.put("Aadhar",AdharNumber.getText().toString());
-                                    hashMap.put("username",editName.getText().toString());
                                     hashMap.put("location",location.getText().toString());
                                     hashMap.put("publisher",FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                                    assert postDetails != null;
-                                    reference.child(postDetails).setValue(hashMap);
+//                                    assert postDetails != null;
+                                    reference.updateChildren(hashMap);
 
                                     pd.dismiss();
 
                                     startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
                                 }else{
-                                    Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UserDetailsActivity.this,"TaskFailed",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -210,7 +212,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                                     pd.dismiss();
                                     startActivity(new Intent(UserDetailsActivity.this, HomePage.class));
                                 }else{
-                                    Toast.makeText(UserDetailsActivity.this,"taskFailed",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UserDetailsActivity.this,"TaskFailed",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -350,7 +352,16 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(UserDetailsActivity.this,"Please complete the Registration process first",
-                Toast.LENGTH_SHORT).show();
+        if(backPressedTime+2000>System.currentTimeMillis()){
+            super.onBackPressed();
+            return;
+        }else{
+            Toast.makeText(UserDetailsActivity.this,"Press back again to exit",Toast.LENGTH_SHORT).show();
+        }
+
+
+        backPressedTime=System.currentTimeMillis();
+
     }
+
 }
