@@ -1,6 +1,5 @@
 package com.project.aas;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -31,11 +30,8 @@ import java.util.HashMap;
 public class getStarted extends AppCompatActivity {
 
     Button getStarted;
-    String firebaseUserNumber;
     FirebaseUser firebaseUser;
     private long backPressedTime;
-    FirebaseDatabase databaseReference;
-    private String Individual,Dealer;
     HashMap<String,String> data;
     @Override
     protected void onStart() {
@@ -61,7 +57,6 @@ public class getStarted extends AppCompatActivity {
                         startActivity(new Intent(getStarted.this,HomePage.class));
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 

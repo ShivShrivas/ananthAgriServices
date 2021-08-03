@@ -157,6 +157,7 @@ public class SignupActivity extends AppCompatActivity {
                                 hashMap.put("location", "");
                                 hashMap.put("phoneNumber", "");
                                 hashMap.put("publisher","");
+                                hashMap.put("numberOfAds","0");
                             }else if(Dealer.isChecked()){
                                 hashMap.put("name", name);
                                 hashMap.put("userName", usernameName.toLowerCase());
@@ -167,6 +168,7 @@ public class SignupActivity extends AppCompatActivity {
                                 hashMap.put("location", "");
                                 hashMap.put("phoneNumber", "");
                                 hashMap.put("publisher","");
+                                hashMap.put("numberOfAds","0");
                             }
 
                             databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {

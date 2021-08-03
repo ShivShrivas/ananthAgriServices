@@ -14,17 +14,26 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.denzcoskun.imageslider.ImageSlider;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.project.aas.R;
 import com.project.aas.databinding.ActivityAddAdsBinding;
 import com.project.aas.model.AdPost;
 
@@ -33,10 +42,11 @@ import org.jetbrains.annotations.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class AddAds extends AppCompatActivity {
-
+    int count=0;
     private ActivityAddAdsBinding binding;
     private EditText mTitle, mPrice, mPinCode,
             mDescription, mVideoUrl,mAddress,
@@ -52,12 +62,17 @@ public class AddAds extends AppCompatActivity {
     private ProgressDialog pd;
     private List<String> mAdImageUrls;
     private List<String> mAdImageUris;
+    private FirebaseUser firebaseUser;
+    private Integer numberOfAds;
+    private String StringOfAds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAddAdsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 
         init();
         pd = new ProgressDialog(this);
@@ -172,16 +187,29 @@ public class AddAds extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Uri imgUri;
+
         if(resultCode == RESULT_OK) {
             if(requestCode == CHOOSE_IMAGE_CODE) {
+                ImageSlider imageSlider = findViewById(R.id.iv_ad_image);
                 if(data.getClipData() == null) {
                     Log.i(TAG, "onActivityResult: Single Image Uri captured : " + data.getData().toString());
+                    imgUri=data.getData();
+                    ImageView setImage=findViewById(R.id.iv_add_images);
+                    setImage.setImageURI(imgUri);
+                    count+=1;
+                    Toast.makeText(this, count+" image(s) uploaded!!", Toast.LENGTH_SHORT).show();
+                    ImageView imgview=findViewById(R.id.imageView2);
+                    imgview.setVisibility(View.GONE);
+                    TextView tv=findViewById(R.id.textView6);
+                    tv.setVisibility(View.GONE);
                     mAdImageUris.add(data.getData().toString());
                 }else {
                     for(int i=0; i<data.getClipData().getItemCount(); i++) {
                         mAdImageUris.add(data.getClipData().getItemAt(i).getUri().toString());
                     }
                 }
+
                 uploadAdImages();
             }
         }
@@ -391,6 +419,29 @@ public class AddAds extends AppCompatActivity {
         // ad.setPostedBy(FirebaseAuth.getInstance().getUid());
         ad.setPostedBy("test seller");
         ad.setImageUrls(mAdImageUrls);
+
+
+
+        String name = firebaseUser.getUid();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name).child("numberOfAds");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+             StringOfAds=snapshot.getValue().toString();
+             numberOfAds=Integer.parseInt(StringOfAds)+1;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("numberOfAds",numberOfAds);
+        reference.updateChildren(hashMap);
+
+
 
         dbref.child(key).setValue(ad).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
