@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/gallery/AAS/app/src/main/res/drawable/card_back.xml" value="0.19722222222222222" />
         <entry key="..\:/gallery/AAS/app/src/main/res/layout/activity_add_ads.xml" value="0.15462962962962962" />
+        <entry key="..\:/gallery/AAS/app/src/main/res/layout/activity_my_orders.xml" value="0.15092592592592594" />
+        <entry key="..\:/gallery/AAS/app/src/main/res/layout/activity_saved_ads.xml" value="0.15092592592592594" />
         <entry key="..\:/gallery/AAS/app/src/main/res/layout/activity_weather.xml" value="0.15462962962962962" />
         <entry key="..\:/gallery/AAS/app/src/main/res/layout/weather_rv_item.xml" value="0.2" />
       </map>
