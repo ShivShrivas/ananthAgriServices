@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "569296197235",
+    "firebase_url": "https://aas-app-50ea8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "aas-app-50ea8",
+    "storage_bucket": "aas-app-50ea8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569296197235:android:b3cc14344e7607a8723c06",
+        "android_client_info": {
+          "package_name": "com.project.aas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569296197235-4kk3s69sp8nh9h8fn66itjvn2dee9pp5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiVhcv0NH7gEfmm7JHRUkLEXjKfF0cies"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569296197235-4kk3s69sp8nh9h8fn66itjvn2dee9pp5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

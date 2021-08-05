@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.project.aas">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AAS">
+        <activity android:name=".getStarted" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.home.cityFinder" />
+        <activity android:name=".ui.home.Weather" />
+        <activity android:name=".ui.Seeds" />
+        <activity android:name=".ui.Fertilizers" />
+        <activity android:name=".ui.Tractor" />
+        <activity android:name=".ui.home.Faq" />
+        <activity android:name=".ui.slideshow.UserDetailsIndividual" />
+        <activity android:name=".AdReviews" />
+        <activity android:name=".ui.home.Portfolio" />
+        <activity android:name=".ui.slideshow.InternshipForm" />
+        <activity android:name=".ui.slideshow.OtpVerification" />
+        <activity android:name=".ui.slideshow.SavedAds" />
+        <activity android:name=".ui.slideshow.PhoneNumber" />
+        <activity android:name=".ui.slideshow.MyOrders" />
+        <activity android:name=".AdDetail" />
+        <activity android:name=".ui.slideshow.Feedback" />
+        <activity android:name=".ui.gallery.AddPhoto" />
+        <activity android:name=".ui.slideshow.Notifications" />
+        <activity android:name=".ui.slideshow.LoginActivity" />
+        <activity android:name=".ui.slideshow.SignupActivity" />
+        <activity android:name=".ui.slideshow.UserDetailsActivity" />
+        <activity android:name=".ui.slideshow.ContactUs" />
+        <activity android:name=".ui.slideshow.Settings" />
+        <activity android:name=".ui.slideshow.Blogs" />
+        <activity android:name=".ui.AddAds" />
+        <activity android:name="com.AboutUs" />
+        <activity android:name=".ui.EditProfile" />
+        <activity
+            android:name=".HomePage"
+            android:label="@string/title_activity_home_page"
+            android:theme="@style/Theme.AAS.NoActionBar" />
+        <activity android:name=".ui.home.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

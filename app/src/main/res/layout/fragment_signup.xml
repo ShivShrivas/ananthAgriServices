@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignupFragment">
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="25dp"
+        android:hint=" Name" />
+
+    <EditText
+        android:id="@+id/mobile_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="25dp"
+        android:hint=" Mobile number" />
+
+    <EditText
+        android:id="@+id/emailid_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mobile_signup"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="25dp"
+        android:hint=" Email id" />
+
+    <EditText
+        android:id="@+id/password_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emailid_signup"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="25dp"
+        android:hint=" Enter Password" />
+
+    <EditText
+        android:id="@+id/password2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_signup"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="25dp"
+        android:hint=" Re-enter Password" />
+
+    <LinearLayout
+        android:id="@+id/ab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password2"
+        android:layout_marginTop="6dp"
+        android:gravity="center_horizontal">
+
+
+        <TextView
+            android:id="@+id/aa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" By registering you agree to the "
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terms of Service"
+            android:textColor="#57c49b" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ab"
+        android:layout_marginTop="7dp"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/register_user"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/round_button"
+            android:text="Register" />
+
+    </LinearLayout>
+
+</RelativeLayout>
