@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +48,7 @@ import java.util.List;
 
 public class AddAds extends AppCompatActivity {
     int count=0;
+    private String userName;
     private ActivityAddAdsBinding binding;
     private EditText mTitle, mPrice, mPinCode,
             mDescription, mVideoUrl,mAddress,
@@ -63,9 +65,8 @@ public class AddAds extends AppCompatActivity {
     private List<String> mAdImageUrls;
     private List<String> mAdImageUris;
     private FirebaseUser firebaseUser;
-    private Integer numberOfAds;
+    private String numberOfAds;
     private String StringOfAds;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +78,27 @@ public class AddAds extends AppCompatActivity {
         init();
         pd = new ProgressDialog(this);
         pd.setMessage("Please Wait...");
+        String user= FirebaseAuth.getInstance().getUid();
+        DatabaseReference userId=FirebaseDatabase.getInstance().getReference().child("Users").child(user);
+        userId.child("userName").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                userName = dataSnapshot.getValue().toString();
+                Log.d("userName", userName);
+            }
+        });
+
+        /****************************
+         * CodePiece for Number of ads
+         ****************************/
+        userId.child("numberOfAds").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                numberOfAds=dataSnapshot.getValue().toString();
+                Log.i("numberOfAds",numberOfAds);
+
+            }
+        });
 
         binding.btnBackPostAd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -411,49 +433,52 @@ public class AddAds extends AppCompatActivity {
         ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Please Wait...");
         pd.show();
+
         DatabaseReference dbref = FirebaseDatabase.getInstance().getReference().child("Ads");
         String key = dbref.push().getKey();
         ad.setId(key);
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
         ad.setDatePosted(timeStamp);
-        // ad.setPostedBy(FirebaseAuth.getInstance().getUid());
-        ad.setPostedBy("test seller");
+        Log.i("userName now",(String)userName);
+        ad.setPostedBy((String) userName);
+
+//        Log.d("userName",(String) userName);
+//        Log.d("userName", "THisIIERFEI eiro ne"+(String)userName);
+//        ad.setPostedBy((String) userName);
+        //ad.setPostedBy("userName");
         ad.setImageUrls(mAdImageUrls);
+        int numb=Integer.parseInt(numberOfAds);
+        if(numb<5){
+            String name = firebaseUser.getUid();
+
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name);
+            numb+=1;
+            HashMap<String,Object> hashMap = new HashMap<>();
+            hashMap.put("numberOfAds",numb);
+            Log.d("numb",""+numb);
+            reference.updateChildren(hashMap);
 
 
 
-        String name = firebaseUser.getUid();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(name).child("numberOfAds");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-             StringOfAds=snapshot.getValue().toString();
-             numberOfAds=Integer.parseInt(StringOfAds)+1;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("numberOfAds",numberOfAds);
-        reference.updateChildren(hashMap);
-
-
-
-        dbref.child(key).setValue(ad).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                pd.dismiss();
-                if(task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Ad posted successfully!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else {
-                    Toast.makeText(getApplicationContext(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+            dbref.child(key).setValue(ad).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    pd.dismiss();
+                    if(task.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Ad posted successfully!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Something went wrong..", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            pd.dismiss();
+            Toast.makeText(this, "Limit of ads exceed!! Please upgrade your subscription...", Toast.LENGTH_SHORT).show();
+        }
+
+
+
+
     }
 }

@@ -7,64 +7,62 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.project.aas.AdDetail;
 import com.project.aas.R;
+import com.project.aas.model.AdPost;
 import com.project.aas.model.SavedAdsModel;
+import com.project.aas.ui.slideshow.SavedAds;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class SavedAdsAdapter extends RecyclerView.Adapter<SavedAdsAdapter.ViewHolder>{
+public class SavedAdsAdapter extends FirebaseRecyclerAdapter<AdPost,SavedAdsAdapter.ViewHolder> {
 
-    private final List<SavedAdsModel> savedAdsList;
-    private final Context mContext;
-
-    public SavedAdsAdapter(List<SavedAdsModel> savedadsList, Context context) {
-        this.savedAdsList = savedadsList;
-        this.mContext = context;
-    }
-
-
-    @NonNull
-    @Override
-    public SavedAdsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_ad,parent,false);
-        return new SavedAdsAdapter.ViewHolder(view);
+    Context context;
+    public SavedAdsAdapter(Context context,FirebaseRecyclerOptions<AdPost> options) {
+        super(options);
+        this.context=context;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        Glide.with(mContext)
-                .load(savedAdsList.get(position).getImageUrls().get(0))
-                .placeholder(R.drawable.ic_baseline_broken_image_24)
+    protected void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position, @NonNull @NotNull AdPost model) {
+        Glide.with(holder.img).load(model.getImageUrls().get(0))
                 .into(holder.img);
-
-        holder.title.setText(savedAdsList.get(position).getTitle());
-        holder.location.setText(savedAdsList.get(position).getLocation());
-        holder.postedBy.setText(savedAdsList.get(position).getPostedBy());
-        holder.datePosted.setText("Posted On "+savedAdsList.get(position).getDatePosted());
-        holder.price.setText("Rs. " + savedAdsList.get(position).getPrice());
-
-        holder.layout.setOnClickListener(new View.OnClickListener() {
+        holder.title.setText(model.getTitle());
+        holder.location.setText(model.getLocation());
+        holder.postedBy.setText(model.getPostedBy());
+        holder.datePosted.setText("Posted On "+model.getDatePosted());
+        holder.price.setText("Rs. " + model.getPrice());
+        SavedAds.progressDialog.dismiss();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AdDetail.class);
-                intent.putExtra("AdObject",savedAdsList.get(position));
-                mContext.startActivity(intent);
+                Intent intent = new Intent(context, AdDetail.class);
+                intent.putExtra("AdObject",model);
+                context.startActivity(intent);
             }
         });
     }
 
+
+
     @Override
-    public int getItemCount() {
-        return savedAdsList.size();
+    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.row_ad,parent,false);
+        return new ViewHolder(view);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -82,4 +80,5 @@ public class SavedAdsAdapter extends RecyclerView.Adapter<SavedAdsAdapter.ViewHo
             layout = itemView.findViewById(R.id.row_layout);
         }
     }
+
 }

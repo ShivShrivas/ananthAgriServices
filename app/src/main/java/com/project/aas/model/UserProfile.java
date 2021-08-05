@@ -5,10 +5,12 @@ import java.util.List;
 public class UserProfile {
 
     String id,name,phoneNumber,email, profilePictureUrl, contactInformation,description;
+    String numberOfAds;
     List<String> publishedAds;
 
-    public UserProfile(String id, String name, String phoneNumber, String email, String profilePictureUrl, String contactInformation, String description, List<String> publishedAds) {
+    public UserProfile(String id,String numberOfAds, String name, String phoneNumber, String email, String profilePictureUrl, String contactInformation, String description, List<String> publishedAds) {
         this.name = name;
+        this.numberOfAds=numberOfAds;
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.email = email;
@@ -19,6 +21,14 @@ public class UserProfile {
     }
 
     public UserProfile() {}
+
+    public String getNumberOfAds() {
+        return numberOfAds;
+    }
+
+    public void setNumberOfAds(String numOfAds) {
+        this.numberOfAds = numOfAds;
+    }
 
     public String getId() {
         return id;

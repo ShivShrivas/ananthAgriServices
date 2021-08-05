@@ -1,11 +1,13 @@
 package com.project.aas.ui.slideshow;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,11 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -47,27 +50,29 @@ import java.util.List;
 public class SavedAds extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    ImageView back,searchh;
-    TextView backt,searchhh,no;
+    ImageView back, searchh;
+    TextView backt, searchhh, no;
     FloatingActionButton floatingActionButton;
 
     RecyclerView savedAdsRecyclerView;
     List<SavedAdsModel> savedAdsList;
     FirebaseUser firebaseUser;
     SavedAdsAdapter savedAdsAdapter;
+    private AdPost mAd;
+    public static ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_ads);
 
-        searchh=findViewById(R.id.searchh);
-        searchhh=findViewById(R.id.searchhh);
-        no=findViewById(R.id.no);
+        searchh = findViewById(R.id.searchh);
+        searchhh = findViewById(R.id.searchhh);
+        no = findViewById(R.id.no);
 
-        back=findViewById(R.id.backk);
+        back = findViewById(R.id.backk);
         back.setOnClickListener(v -> startActivity(new Intent(SavedAds.this, HomePage.class)));
-        backt=findViewById(R.id.backkk);
+        backt = findViewById(R.id.backkk);
         backt.setOnClickListener(v -> startActivity(new Intent(SavedAds.this, HomePage.class)));
 
         floatingActionButton = findViewById(R.id.add_ads);
@@ -79,20 +84,32 @@ public class SavedAds extends AppCompatActivity {
             }
         });
 
-        savedAdsRecyclerView=findViewById(R.id.savedAdsRecycler);
+        savedAdsRecyclerView = findViewById(R.id.savedAdsRecycler);
         savedAdsRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager adsLayoutManager = new GridLayoutManager(this,2);
-        savedAdsRecyclerView.setLayoutManager(adsLayoutManager);
-        savedAdsRecyclerView.setNestedScrollingEnabled(false);
-        savedAdsList = new ArrayList<>();
-        savedAdsAdapter = new SavedAdsAdapter(savedAdsList,this);
-        savedAdsRecyclerView.setAdapter(savedAdsAdapter);
-        savedAdsOfUser();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("data fetching...");
+        progressDialog.show();
 
+
+        RecyclerView.LayoutManager linearLayoutManager = new GridLayoutManager(this,2);
+        FirebaseRecyclerOptions<AdPost> options = new FirebaseRecyclerOptions.Builder<AdPost>()
+                .setQuery(FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("saved"), AdPost.class)
+                .build();
+
+        savedAdsAdapter = new SavedAdsAdapter(SavedAds.this, options);
+        savedAdsRecyclerView.setLayoutManager(linearLayoutManager);
+        savedAdsRecyclerView.setAdapter(savedAdsAdapter);
+        savedAdsAdapter.notifyDataSetChanged();
+//            savedAdsRecyclerView.setNestedScrollingEnabled(false);
+//        savedAdsAdapter = new SavedAdsAdapter(SavedAds.this,options);
+//        savedAdsRecyclerView.setAdapter(savedAdsAdapter);
+        savedAdsOfUser();
+//
         bottomNavigationView=findViewById(R.id.bottomView);
-        bottomNavigationView.setBackground(null);
+        //bottomNavigationView.setBackground(null);
         bottomNavigationView.setSelectedItemId(R.id.savedAds);
-        bottomNavigationView.getMenu().getItem(2).setEnabled(false);
+//        bottomNavigationView.getMenu().getItem(2).setEnabled(false);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
@@ -113,34 +130,52 @@ public class SavedAds extends AppCompatActivity {
     }
 
 
-    private void savedAdsOfUser(){
+    private void savedAdsOfUser() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).
                         child("saved");
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                savedAdsList.clear();
-                for(DataSnapshot snapshot1:snapshot.getChildren()){
-                    if(snapshot.exists()){
-                        no.setVisibility(View.GONE);
-                        searchh.setVisibility(View.GONE);
-                        searchhh.setVisibility(View.GONE);
-                        SavedAdsModel savedAD = snapshot1.getValue(SavedAdsModel.class);
-                        savedAdsList.add(savedAD);
-                        Collections.reverse(savedAdsList);
-                        savedAdsAdapter.notifyDataSetChanged();
-                    }else{
-                        no.setVisibility(View.VISIBLE);
-                        searchh.setVisibility(View.VISIBLE);
-                        searchhh.setVisibility(View.VISIBLE);
-                    }
+//                savedAdsList.clear();
+
+                if (snapshot.exists()) {
+                    no.setVisibility(View.GONE);
+                    searchh.setVisibility(View.GONE);
+                    searchhh.setVisibility(View.GONE);
+                    savedAdsAdapter.notifyDataSetChanged();
+                } else {
+                    no.setVisibility(View.VISIBLE);
+                    searchh.setVisibility(View.VISIBLE);
+                    searchhh.setVisibility(View.VISIBLE);
+                    progressDialog.dismiss();
                 }
             }
+
+
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (savedAdsAdapter != null) {
+            savedAdsAdapter.startListening();
+        }
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (savedAdsAdapter != null) {
+            savedAdsAdapter.stopListening();
+        }
+
     }
 }
